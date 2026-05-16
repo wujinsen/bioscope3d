@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200">
+  <defs>
+    <linearGradient id="t4bg" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#f4f8fc"/>
+      <stop offset="100%" stop-color="#dde8f4"/>
+    </linearGradient>
+    <linearGradient id="t4hull" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbfcfe"/>
+      <stop offset="100%" stop-color="#bdc3c7"/>
+    </linearGradient>
+    <linearGradient id="t4cock" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f39c12"/>
+      <stop offset="100%" stop-color="#d68910"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#t4bg)"/>
+  <ellipse cx="160" cy="172" rx="88" ry="10" fill="#2c3e50" opacity="0.06"/>
+  <path fill="url(#t4hull)" stroke="#aeb6bf" stroke-width="1.2"
+    d="M54 140 L160 42 L266 140 L238 140 L160 64 L82 140 Z"/>
+  <path fill="#5d6d7e" opacity="0.35" d="M98 122 L160 58 L222 122 Z"/>
+  <path fill="url(#t4cock)" d="M150 98 L160 50 L170 98 Z" opacity="0.95"/>
+  <rect x="116" y="114" width="18" height="9" rx="2" fill="#85929e"/>
+  <rect x="186" y="114" width="18" height="9" rx="2" fill="#85929e"/>
+  <path fill="#3498db" opacity="0.85" d="M148 140 L160 156 L172 140 Z"/>
+</svg>

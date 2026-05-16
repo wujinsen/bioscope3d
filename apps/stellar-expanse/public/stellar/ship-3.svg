@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200">
+  <defs>
+    <linearGradient id="t3bg" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#f8f4fc"/>
+      <stop offset="100%" stop-color="#e8dcf0"/>
+    </linearGradient>
+    <linearGradient id="t3wing" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#d7a8e8"/>
+      <stop offset="50%" stop-color="#9b59b6"/>
+      <stop offset="100%" stop-color="#6c3483"/>
+    </linearGradient>
+    <linearGradient id="t3fus" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#ecf0f1"/>
+      <stop offset="100%" stop-color="#95a5a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#t3bg)"/>
+  <ellipse cx="160" cy="172" rx="94" ry="9" fill="#2c3e50" opacity="0.06"/>
+  <path fill="url(#t3wing)" stroke="#8e44ad" stroke-width="1"
+    d="M44 126 L160 52 L276 126 L252 126 L160 74 L68 126 Z" opacity="0.95"/>
+  <path fill="url(#t3fus)" stroke="#7f8c8d" stroke-width="1"
+    d="M146 126 L160 46 L174 126 Z"/>
+  <ellipse cx="160" cy="54" rx="11" ry="9" fill="#af7ac5" opacity="0.75"/>
+  <ellipse cx="160" cy="94" rx="24" ry="9" fill="none" stroke="#d2b4de" stroke-width="2.5"/>
+  <rect x="150" y="118" width="20" height="30" rx="3" fill="#566573"/>
+  <ellipse cx="160" cy="158" rx="9" ry="18" fill="#5dade2" opacity="0.8"/>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200">
+  <defs>
+    <linearGradient id="t5bg" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#f2f4f6"/>
+      <stop offset="100%" stop-color="#d5dce4"/>
+    </linearGradient>
+    <linearGradient id="t5ring" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#aeb6bf"/>
+      <stop offset="50%" stop-color="#5d6d7e"/>
+      <stop offset="100%" stop-color="#aeb6bf"/>
+    </linearGradient>
+    <linearGradient id="t5core" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ecf0f1"/>
+      <stop offset="100%" stop-color="#7f8c8d"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#t5bg)"/>
+  <ellipse cx="160" cy="172" rx="82" ry="8" fill="#2c3e50" opacity="0.06"/>
+  <ellipse cx="160" cy="108" rx="80" ry="24" fill="none" stroke="url(#t5ring)" stroke-width="9" opacity="0.95"/>
+  <ellipse cx="160" cy="108" rx="56" ry="15" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <rect x="136" y="86" width="48" height="42" rx="12" fill="url(#t5core)" stroke="#707b7c" stroke-width="1"/>
+  <rect x="148" y="96" width="24" height="14" rx="2" fill="#c0392b" opacity="0.55"/>
+  <ellipse cx="160" cy="70" rx="20" ry="16" fill="url(#t5core)" stroke="#707b7c" stroke-width="1"/>
+  <circle cx="116" cy="108" r="7" fill="#e74c3c" opacity="0.9"/>
+  <circle cx="204" cy="108" r="7" fill="#e74c3c" opacity="0.9"/>
+</svg>

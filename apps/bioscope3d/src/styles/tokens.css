@@ -1,0 +1,78 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   BioScope3D · Design Tokens
+   Migrated from design/v3 final.
+   Single source of truth for colors, fonts, shadows.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Paper / surface */
+  --bg:         #f2ece0;
+  --bg-soft:    #f8f3e7;
+  --paper:      #faf4e8;
+  --paper-warm: #fdfaf1;
+  --line:       #cfc8b6;
+  --line-soft:  #e7e1d0;
+
+  /* Accents */
+  --olive:      #8d885a;
+  --olive-dk:   #5d5a36;
+  --olive-lt:   #b3b08c;
+  --olive-hint: #e8e6d0;
+
+  --lilac:      #908ab8;
+  --lilac-dk:   #554f7c;
+  --lilac-hint: #e6e3ef;
+
+  --post-it:    #fce8a0;
+  --post-it-dk: #b8902f;
+
+  /* Text */
+  --text:       #0b0b08;
+  --text-soft:  #463f30;
+  --text-mute:  #8a8467;
+
+  /* Cell signature colors */
+  --cell-plant:    #6c8a3a;
+  --cell-animal:   #b76ba0;
+  --cell-cancer:   #8f4a62;
+  --cell-bacteria: #c2864a;
+  --cell-rbc:      #b54839;
+  --cell-neuron:   #554f7c;
+  --cell-wbc:      #607a8a;
+  --cell-muscle:   #8a3a3a;
+  --cell-current:  var(--cell-plant);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 0 rgba(0, 0, 0, 0.04), 0 6px 18px rgba(74, 52, 18, 0.05);
+  --shadow-md: 0 2px 0 rgba(0, 0, 0, 0.04), 0 14px 38px rgba(74, 52, 18, 0.08);
+  --shadow-lg: 0 6px 22px rgba(74, 52, 18, 0.18);
+
+  /* Type stacks */
+  --font-sans:  "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-hand:  "Caveat", cursive;
+  --font-mono:  "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-pill: 999px;
+
+  /* Z-index */
+  --z-hud:     8;
+  --z-overlay: 10;
+  --z-popover: 20;
+  --z-modal:   100;
+}
+
+/* Cell-current per body[data-cell] */
+body[data-cell="plant"]    { --cell-current: var(--cell-plant); }
+body[data-cell="animal"]   { --cell-current: var(--cell-animal); }
+body[data-cell="cancer"]   { --cell-current: var(--cell-cancer); }
+body[data-cell="bacteria"] { --cell-current: var(--cell-bacteria); }
+body[data-cell="rbc"]      { --cell-current: var(--cell-rbc); }
+body[data-cell="neuron"]   { --cell-current: var(--cell-neuron); }
+body[data-cell="wbc"]      { --cell-current: var(--cell-wbc); }
+body[data-cell="muscle"]   { --cell-current: var(--cell-muscle); }

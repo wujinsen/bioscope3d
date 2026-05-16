@@ -1,0 +1,29 @@
+{
+  "name": "stellar-expanse",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Stellar Expanse — ship selection UI (React port of design/v4-stellar-expanse; separate from BioScope3D)",
+  "scripts": {
+    "dev": "node ./scripts/run-vite-cli.mjs",
+    "build": "tsc -b && vite build",
+    "preview": "node ./scripts/run-vite-cli.mjs preview",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@bioscope3d/workspace-ui-locale": "workspace:*",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.171.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@types/three": "^0.171.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7"
+  }
+}

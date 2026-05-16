@@ -1,0 +1,76 @@
+# Local pnpm store when created under the repo root (not portable)
+.pnpm-store/
+
+# Large GLB binaries — not in Git; download from maintainer storage (e.g. Google Drive) into models/, then pnpm sync:models
+/models/*.glb
+/apps/bioscope3d/public/models/*.glb
+/apps/stellar-expanse/public/models/*.glb
+/apps/ancient-chinese-famous-swords/models/*.glb
+
+# macOS / Windows shell crud
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# Python virtualenv (used only for early analysis scripts)
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Node
+node_modules/
+.npm/
+.yarn/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite / app build output
+apps/*/dist/
+apps/*/dist-ssr/
+apps/*/.vite/
+apps/*/node_modules/.tmp/
+
+# TypeScript incremental
+*.tsbuildinfo
+
+# Environment files (never commit secrets)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Editor / IDE
+.vscode/
+.idea/
+*.iml
+
+# Coverage / test
+coverage/
+.nyc_output/
+
+# ffmpeg frame dumps next to source mp4s (regenerate anytime)
+data/*-frames/
+data/mmd_frames/
+data/mmd_analysis/
+data/_frame*.jpg
+data/_zh_preview.jpg
+
+# Local analysis videos (regenerate / store outside repo)
+/*.mp4
+
+# Design prototypes & reference art — local only; never commit (see AGENTS.md asset mirror paths)
+design/
+
+# Local-only intermediates from analysis / rendering experiments
+# (kept untracked so they can stay on disk without polluting git)
+/tmp_*/
+/scratch/
+/render_out/
+/_archive/

@@ -1,0 +1,18 @@
+{
+  "name": "bioscope3d-workspace",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "npm run dev -w lab-hub",
+    "dev:hub": "npm run dev -w lab-hub",
+    "dev:bioscope3d": "npm run dev -w bioscope3d",
+    "dev:stellar-expanse": "npm run dev -w stellar-expanse",
+    "sync:models": "node scripts/sync-models.mjs",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  }
+}

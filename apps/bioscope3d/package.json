@@ -1,0 +1,49 @@
+{
+  "name": "bioscope3d",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "description": "BioScope3D — interactive 3D cell viewer for students, teachers, and researchers",
+  "scripts": {
+    "dev": "node ./scripts/run-vite-cli.mjs",
+    "build": "tsc -b && vite build",
+    "preview": "node ./scripts/run-vite-cli.mjs preview",
+    "typecheck": "tsc -b",
+    "verify:glb": "node scripts/verify-glb-normalize.mjs",
+    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+  },
+  "dependencies": {
+    "@bioscope3d/workspace-ui-locale": "workspace:*",
+    "@google/model-viewer": "^4.0.0",
+    "@react-three/drei": "^10.0.0",
+    "@react-three/fiber": "^9.0.0",
+    "@react-three/postprocessing": "^3.0.0",
+    "framer-motion": "^11.18.2",
+    "lucide-react": "^0.469.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hotkeys-hook": "^4.6.1",
+    "three": "^0.171.0",
+    "zustand": "^5.0.2"
+  },
+  "overrides": {
+    "stats-gl": {
+      "three": "0.171.0"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@types/three": "^0.171.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.18.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.18",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "vite": "^6.0.7"
+  }
+}

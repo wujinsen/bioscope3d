@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>古劍錄 · 中國名劍數位展廳</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+  <style>
+    :root {
+      --void: #0a0a0c;
+      --panel: #121215;
+      --panel-2: #18181c;
+      --line: rgba(201, 169, 98, 0.22);
+      --line-strong: rgba(201, 169, 98, 0.45);
+      --gold: #c9a962;
+      --gold-bright: #e4d4a8;
+      --gold-dim: #8a7548;
+      --text: #c8c4bc;
+      --text-muted: #7a756c;
+      --accent-blade: rgba(180, 200, 210, 0.08);
+      --font-display: "Ma Shan Zheng", "Noto Serif SC", serif;
+      --font-body: "Noto Serif SC", serif;
+      --top-h: 56px;
+      --rail-w: 268px;
+      --detail-w: 320px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--void);
+      background-image:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201, 169, 98, 0.06), transparent),
+        linear-gradient(180deg, #0e0e11 0%, var(--void) 40%);
+      overflow: hidden;
+    }
+
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-rows: var(--top-h) 1fr;
+      min-height: 0;
+    }
+
+    /* —— Top bar —— */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px 0 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--panel) 0%, rgba(18,18,21,0.92) 100%);
+      flex-shrink: 0;
+      gap: 16px;
+    }
+    .brand-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--gold-bright);
+      letter-spacing: 0.06em;
+      line-height: 1.2;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .nav-crumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .nav-crumb a {
+      color: var(--gold-dim);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-crumb a:hover { color: var(--gold); }
+    .nav-crumb span.sep { opacity: 0.4; user-select: none; }
+
+    .topbar-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      max-width: 420px;
+    }
+    .search {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--void);
+    }
+    .search svg { flex-shrink: 0; opacity: 0.45; }
+    .search input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      outline: none;
+    }
+    .search input::placeholder { color: var(--text-muted); }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .era-pill {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-align: right;
+      line-height: 1.35;
+      max-width: 200px;
+    }
+    .era-pill strong {
+      display: block;
+      color: var(--gold-dim);
+      font-weight: 500;
+    }
+    .icon-row {
+      display: flex;
+      gap: 4px;
+    }
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--gold-dim);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .icon-btn:hover {
+      color: var(--gold);
+      border-color: var(--line);
+      background: rgba(201, 169, 98, 0.06);
+    }
+    .icon-btn.is-on {
+      color: var(--gold-bright);
+      border-color: var(--line-strong);
+      background: rgba(201, 169, 98, 0.1);
+    }
+
+    /* —— Main 3-col —— */
+    .main {
+      display: grid;
+      grid-template-columns: var(--rail-w) 1fr var(--detail-w);
+      min-height: 0;
+    }
+    @media (max-width: 1024px) {
+      body { overflow: auto; }
+      .main {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .rail, .detail { max-height: none; }
+      .stage-wrap { min-height: 52vh; }
+      .stage-inner { padding: 16px 48px 104px; min-height: 280px; }
+      .viewer-case { inset: 16px 48px 100px; }
+      .viewer-stack { inset: 17px 49px 101px; }
+      .stage-overlay { left: 56px; bottom: 112px; }
+    }
+
+    /* Left rail */
+    .rail {
+      border-right: 1px solid var(--line);
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .rail-head {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .rail-head h2 {
+      margin: 0;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .rail-head .count {
+      margin-top: 6px;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+    .sword-list {
+      list-style: none;
+      margin: 0;
+      padding: 10px 8px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .sword-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 10px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sword-item:hover { background: rgba(201, 169, 98, 0.05); }
+    .sword-item.is-active {
+      background: rgba(201, 169, 98, 0.08);
+      border-color: var(--line-strong);
+    }
+    .sword-item.is-active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-left-color: var(--gold);
+      margin-left: -1px;
+    }
+    .sword-thumb {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      flex-shrink: 0;
+    }
+    .sword-thumb.ph {
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--gold-dim);
+    }
+    .sword-meta { min-width: 0; flex: 1; }
+    .sword-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--gold-bright);
+      line-height: 1.25;
+    }
+    .sword-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .tag {
+      font-size: 0.58rem;
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      color: var(--text-muted);
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Center: 3D 展櫃 */
+    .stage-wrap {
+      position: relative;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(ellipse 55% 45% at 50% 42%, var(--accent-blade), transparent 65%),
+        radial-gradient(ellipse 80% 35% at 50% 88%, rgba(201, 169, 98, 0.04), transparent 55%),
+        linear-gradient(180deg, #0c0c0f 0%, var(--void) 100%);
+    }
+    .stage-inner {
+      flex: 1;
+      position: relative;
+      min-height: 320px;
+      padding: 20px 56px 104px;
+    }
+    .stage-vignette {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.82);
+      z-index: 4;
+    }
+    .viewer-case {
+      position: absolute;
+      inset: 20px 56px 104px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: linear-gradient(180deg, rgba(22,22,26,0.9) 0%, rgba(8,8,10,0.96) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(201, 169, 98, 0.08),
+        0 24px 48px rgba(0,0,0,0.55);
+    }
+    .viewer-case::before,
+    .viewer-case::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--gold-dim);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .viewer-case::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+    .viewer-case::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+    .viewer-stack {
+      position: absolute;
+      inset: 21px 57px 105px;
+      border-radius: 5px;
+      overflow: hidden;
+      background: radial-gradient(ellipse 50% 45% at 50% 48%, #1a1a22 0%, #0a0a0e 72%);
+    }
+    model-viewer#swordModel {
+      width: 100%;
+      height: 100%;
+      display: block;
+      --poster-color: #0a0a0e;
+      background: transparent;
+    }
+    model-viewer#swordModel.is-hidden { display: none !important; }
+    .viewer-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+      text-align: center;
+      background: radial-gradient(ellipse 55% 50% at 50% 45%, #222228 0%, #0a0a0e 70%);
+      z-index: 1;
+    }
+    .viewer-fallback.is-hidden { display: none; }
+    .viewer-fallback img {
+      max-width: 78%;
+      max-height: 52%;
+      object-fit: contain;
+      opacity: 0.55;
+      filter: drop-shadow(0 16px 32px rgba(0,0,0,0.8));
+    }
+    .viewer-fallback .hint-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+    }
+    .viewer-fallback .hint-path {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 28em;
+    }
+    .viewer-fallback code {
+      font-family: ui-monospace, monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: rgba(0,0,0,0.35);
+    }
+    .viewer-loading {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(8,8,10,0.65);
+      z-index: 2;
+      font-size: 0.75rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+    }
+    .viewer-loading.is-hidden { display: none; }
+    .stage-overlay {
+      position: absolute;
+      left: 72px;
+      bottom: 120px;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .stage-overlay .name {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.15rem);
+      color: var(--gold-bright);
+      letter-spacing: 0.12em;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.9);
+    }
+    .stage-overlay .era {
+      margin-top: 4px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    .stage-dock {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      z-index: 6;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      max-width: calc(100% - 120px);
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(12,12,15,0.88);
+      backdrop-filter: blur(8px);
+    }
+    .dock-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+      width: 100%;
+      text-align: center;
+      margin: -2px 0 2px;
+    }
+    .dock-btn {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      padding: 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: rgba(24,24,28,0.95);
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .dock-btn:hover {
+      color: var(--gold);
+      border-color: var(--line-strong);
+    }
+    .dock-btn.is-active {
+      color: var(--gold-bright);
+      border-color: var(--gold-dim);
+      background: rgba(201, 169, 98, 0.1);
+    }
+    .stage-hint {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .stage-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 7;
+      width: 44px;
+      height: 88px;
+      border: 1px solid var(--line);
+      background: rgba(10,10,12,0.65);
+      color: var(--gold-dim);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .stage-arrow:hover {
+      color: var(--gold);
+      border-color: var(--line-strong);
+      background: rgba(201, 169, 98, 0.1);
+    }
+    .stage-arrow.prev { left: 12px; border-radius: 0 4px 4px 0; border-left: none; }
+    .stage-arrow.next { right: 12px; border-radius: 4px 0 0 4px; border-right: none; }
+
+    /* Right detail */
+    .detail {
+      border-left: 1px solid var(--line);
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .detail-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .detail-head h2 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+    }
+    .detail-head svg { opacity: 0.85; }
+    .detail-scroll {
+      padding: 12px 16px 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    details.panel {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      margin-bottom: 8px;
+      background: rgba(0,0,0,0.2);
+    }
+    details.panel summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold-bright);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    details.panel summary::-webkit-details-marker { display: none; }
+    details.panel summary::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-right: 1px solid var(--gold-dim);
+      border-bottom: 1px solid var(--gold-dim);
+      transform: rotate(45deg);
+      transition: transform 0.2s;
+    }
+    details.panel[open] summary::after { transform: rotate(-135deg); margin-top: 4px; }
+    details.panel .panel-body {
+      padding: 0 12px 12px;
+      font-size: 0.78rem;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .kv {
+      display: grid;
+      grid-template-columns: 4.2em 1fr;
+      gap: 6px 10px;
+      font-size: 0.76rem;
+    }
+    .kv dt {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .kv dd { margin: 0; color: var(--text); }
+    .detail-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .detail-tags .tag {
+      font-size: 0.65rem;
+      padding: 4px 8px;
+      border-color: var(--line-strong);
+      color: var(--gold-dim);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-title">古劍錄 · 中國名劍數位展廳</div>
+        <nav class="nav-crumb" aria-label="篩選">
+          <a href="#">全部名劍</a><span class="sep">/</span>
+          <a href="#">青銅劍</a><span class="sep">/</span>
+          <a href="#">鐵劍與鋼劍</a><span class="sep">/</span>
+          <a href="#">典籍傳說</a>
+        </nav>
+      </div>
+      <div class="topbar-center">
+        <label class="search" aria-label="搜索">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="search" placeholder="搜劍名、銘文、館藏…" />
+        </label>
+      </div>
+      <div class="topbar-right">
+        <div class="era-pill" id="topEra">
+          <strong id="topEraTitle">春秋晚期</strong>
+          <span id="topEraSub">約公元前 5 世紀 · 吳越青銅劍巔峰</span>
+        </div>
+        <div class="icon-row">
+          <button type="button" class="icon-btn is-on" id="btnAutoRotate" title="自動旋轉" aria-pressed="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6V3L8 7l4 4V8c2.76 0 5 2.24 5 5 0 1.28-.48 2.45-1.27 3.35"/><path d="M12 18v3l4-4-4-4v3c-2.76 0-5-2.24-5-5 0-1.28.48-2.45 1.27-3.35"/></svg>
+          </button>
+          <button type="button" class="icon-btn" title="展廳模式（佔位）" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main">
+      <aside class="rail" aria-label="典藏列表">
+        <div class="rail-head">
+          <h2>典藏名劍</h2>
+          <div class="count">共 <span id="swordCount">3</span> 柄</div>
+        </div>
+        <ul class="sword-list" id="swordList">
+          <li class="sword-item is-active" data-key="goujian" data-idx="0">
+            <img class="sword-thumb" src="./Gemini_Generated_Image_y4kyzuy4kyzuy4ky.png" alt="" width="52" height="52" />
+            <div class="sword-meta">
+              <div class="sword-name">越王勾踐劍</div>
+              <div class="sword-tags">
+                <span class="tag">江陵望山</span>
+                <span class="tag">青銅</span>
+              </div>
+            </div>
+          </li>
+          <li class="sword-item" data-key="longquan" data-idx="1">
+            <div class="sword-thumb ph">龍</div>
+            <div class="sword-meta">
+              <div class="sword-name">龍泉劍</div>
+              <div class="sword-tags">
+                <span class="tag">百工傳承</span>
+                <span class="tag">鐵鋼</span>
+              </div>
+            </div>
+          </li>
+          <li class="sword-item" data-key="ganjiang" data-idx="2">
+            <div class="sword-thumb ph">吳</div>
+            <div class="sword-meta">
+              <div class="sword-name">干將莫邪</div>
+              <div class="sword-tags">
+                <span class="tag">典籍</span>
+                <span class="tag">傳說</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </aside>
+
+      <section class="stage-wrap" aria-label="三維觀劍">
+        <div class="stage-vignette" aria-hidden="true"></div>
+        <div class="stage-inner">
+          <div class="viewer-case" aria-hidden="true"></div>
+          <div class="viewer-stack">
+            <model-viewer
+              id="swordModel"
+              camera-controls
+              touch-action="pan-y"
+              interaction-prompt="none"
+              shadow-intensity="1"
+              exposure="1"
+              environment-image="neutral"
+              camera-orbit="112deg 72deg 92%"
+              field-of-view="30deg"
+              min-field-of-view="16deg"
+              max-field-of-view="50deg"
+              auto-rotate-delay="4000"
+              alt=""
+            ></model-viewer>
+            <div id="viewerLoading" class="viewer-loading is-hidden">載入 3D 網格…</div>
+            <div id="viewerFallback" class="viewer-fallback is-hidden">
+              <img id="fallbackImg" alt="" width="640" height="360" hidden />
+              <div class="hint-title" id="fallbackTitle">尚無 3D 資產</div>
+              <p class="hint-path" id="fallbackPath"></p>
+            </div>
+          </div>
+          <button type="button" class="stage-arrow prev" id="btnPrev" aria-label="上一柄">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="stage-arrow next" id="btnNext" aria-label="下一柄">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="stage-overlay">
+            <div class="name" id="overlayName">越王勾踐劍</div>
+            <div class="era" id="overlayEra">春秋晚期 · 青銅鳥蟲書銘</div>
+          </div>
+          <div class="stage-dock" role="toolbar" aria-label="觀劍與光環境">
+            <span class="dock-label">光環境 · 視角</span>
+            <button type="button" class="dock-btn is-active" data-preset="neutral" title="中性 IBL，利於看銹色與刃線">中性棚拍</button>
+            <button type="button" class="dock-btn" data-preset="museum" title="較低曝光、偏展櫃射燈感">博物館射燈</button>
+            <button type="button" class="dock-btn" data-preset="bronze" title="略暖、略強對比，突出青銅質感">青銅暖調</button>
+            <button type="button" class="dock-btn" data-preset="dramatic" title="強陰影、戲劇性輪廓">戲劇輪廓</button>
+            <button type="button" class="dock-btn" id="btnResetCam" title="恢復預設環繞角與距離">重置視角</button>
+          </div>
+          <p class="stage-hint">左鍵拖曳旋轉 · 滾輪縮放 · 右鍵平移（觸控：單指轉、雙指縮放）</p>
+        </div>
+      </section>
+
+      <aside class="detail" aria-label="劍器詳考">
+        <div class="detail-head">
+          <h2>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-4-7 4V5a2 2 0 012-2h10a2 2 0 012 2v16z"/></svg>
+            劍器詳考
+          </h2>
+        </div>
+        <div class="detail-scroll">
+          <details class="panel" open>
+            <summary>基本信息</summary>
+            <div class="panel-body">
+              <dl class="kv" id="kvBlock"></dl>
+            </div>
+          </details>
+          <details class="panel" open>
+            <summary>器物敘錄</summary>
+            <div class="panel-body" id="descBody"></div>
+          </details>
+          <details class="panel" open>
+            <summary>劍文化與史地價值</summary>
+            <div class="panel-body" id="valueBody"></div>
+          </details>
+          <div class="detail-tags" id="tagBlock"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const KEYS = ["goujian", "longquan", "ganjiang"];
+
+    const DEFAULT_ORBIT = "112deg 72deg 92%";
+
+    const LIGHT_PRESETS = {
+      neutral: { environmentImage: "neutral", exposure: "1", shadowIntensity: "1" },
+      museum: { environmentImage: "legacy", exposure: "0.7", shadowIntensity: "1.2" },
+      bronze: { environmentImage: "legacy", exposure: "1.1", shadowIntensity: "0.9" },
+      dramatic: { environmentImage: "legacy", exposure: "0.82", shadowIntensity: "1.4" },
+    };
+
+    const DATA = {
+      goujian: {
+        overlayName: "越王勾踐劍",
+        overlayEra: "春秋晚期 · 青銅鳥蟲書銘",
+        topEraTitle: "春秋晚期",
+        topEraSub: "約公元前 5 世紀 · 吳越青銅劍巔峰",
+        poster: "./Gemini_Generated_Image_y4kyzuy4kyzuy4ky.png",
+        modelSrc: "./models/goujian.glb",
+        alt: "越王勾踐劍",
+        kv: [
+          ["時代", "春秋晚期"],
+          ["材質", "青銅（高錫劍身）"],
+          ["尺寸", "通長約 55.7 cm（以館方為準）"],
+          ["出土", "1965 年湖北江陵望山一號楚墓"],
+          ["現藏", "湖北省博物館"],
+        ],
+        desc: "劍身滿飾黑色菱形暗格紋，劍格正面鑲藍色琉璃、背面綠松石，圓首同心圓紋精細。銘文為鳥蟲書，證為越王勾踐自作用劍，代表吳越鑄劍工藝與貴族用劍制度之極致。",
+        value: "此劍集中現「劍為百兵之君」的禮器化與身份象徵：刃體、銘文、鑲嵌共同構成可讀的物質文本，是劍文化研究與青銅時代東南考古的核心標本。數位展陳宜突出銘文可讀性與截面冶金信息。",
+        tags: ["鳥蟲書", "菱形暗格紋", "琉璃劍格", "楚墓", "天下第一劍"],
+      },
+      longquan: {
+        overlayName: "龍泉劍",
+        overlayEra: "工藝傳承 · 鐵鋼鍛打",
+        topEraTitle: "龍泉鑄劍",
+        topEraSub: "自宋代以降地名與工藝品牌 · 非遺與當代復原",
+        poster: "",
+        modelSrc: "./models/longquan.glb",
+        alt: "龍泉劍",
+        kv: [
+          ["脈絡", "浙江龍泉 · 歐冶子傳說地望"],
+          ["形制", "漢劍、明劍等後世演變併陳"],
+          ["展示", "待載入鍛打紋理與火色 GLB"],
+          ["關聯", "旅博文創 · 劍術展演"],
+        ],
+        desc: "龍泉以地名成劍名，承「鑄劍谷」敘事與實戰長劍傳統。產品層可設「工藝時間軸」：煉坯、摺疊、淬火、研磨，對應可交互剖面。",
+        value: "劍文化在此從「王室青銅」過渡到「百工鐵鋼」與地域品牌；界面建議與實物館藏劍並列時，用色與字級區分「考古標本」與「工藝傳承條目」。",
+        tags: ["龍泉鍛制", "摺疊紋", "淬火", "地名劍"],
+      },
+      ganjiang: {
+        overlayName: "干將莫邪",
+        overlayEra: "典籍敘事 · 吳越鑄劍傳說",
+        topEraTitle: "吳越敘事",
+        topEraSub: "口傳與文本層累 · 與實物劍分欄呈現",
+        poster: "",
+        modelSrc: "",
+        alt: "干將莫邪",
+        kv: [
+          ["出處", "《吳越春秋》《搜神記》等"],
+          ["母題", "雌雄雙劍、鑄劍獻吳王"],
+          ["展示", "概念雕塑 / 版畫剪影 / 影視授權待定"],
+        ],
+        desc: "干將莫邪代表劍文化中的「鑄劍敘事」支線：人、火、血與王權的糾葛，適合做沉浸式旁白與多媒體層，而非單一器物著錄。",
+        value: "建議在信息架構上標註「傳說條目」，與出土實劍分流，避免觀眾將文學母題與考古斷代混讀；視覺可用略冷的輔色與志怪字體層級作弱對比。",
+        tags: ["典籍", "鑄劍傳說", "吳越", "敘事陳列"],
+      },
+    };
+
+    let activeKey = "goujian";
+
+    function init() {
+      const list = document.getElementById("swordList");
+      const swordModel = document.getElementById("swordModel");
+      const viewerLoading = document.getElementById("viewerLoading");
+      const viewerFallback = document.getElementById("viewerFallback");
+      const fallbackImg = document.getElementById("fallbackImg");
+      const fallbackTitle = document.getElementById("fallbackTitle");
+      const fallbackPath = document.getElementById("fallbackPath");
+      const overlayName = document.getElementById("overlayName");
+      const overlayEra = document.getElementById("overlayEra");
+      const topEraTitle = document.getElementById("topEraTitle");
+      const topEraSub = document.getElementById("topEraSub");
+      const kvBlock = document.getElementById("kvBlock");
+      const descBody = document.getElementById("descBody");
+      const valueBody = document.getElementById("valueBody");
+      const tagBlock = document.getElementById("tagBlock");
+      const btnPrev = document.getElementById("btnPrev");
+      const btnNext = document.getElementById("btnNext");
+      const btnAutoRotate = document.getElementById("btnAutoRotate");
+      const btnResetCam = document.getElementById("btnResetCam");
+
+      function applyLightPreset(presetId) {
+        const p = LIGHT_PRESETS[presetId];
+        if (!p || !swordModel) return;
+        swordModel.setAttribute("environment-image", p.environmentImage);
+        swordModel.setAttribute("exposure", p.exposure);
+        swordModel.setAttribute("shadow-intensity", p.shadowIntensity);
+        document.querySelectorAll(".stage-dock .dock-btn[data-preset]").forEach((b) => {
+          b.classList.toggle("is-active", b.dataset.preset === presetId);
+        });
+      }
+
+      function syncAutoRotate() {
+        const on = btnAutoRotate.classList.contains("is-on");
+        if (on) swordModel.setAttribute("auto-rotate", "");
+        else swordModel.removeAttribute("auto-rotate");
+        btnAutoRotate.setAttribute("aria-pressed", on ? "true" : "false");
+      }
+
+      function resetCamera() {
+        try {
+          swordModel.cameraTarget = "auto auto auto";
+          swordModel.cameraOrbit = DEFAULT_ORBIT;
+          swordModel.fieldOfView = "30deg";
+        } catch {
+          swordModel.setAttribute("camera-orbit", DEFAULT_ORBIT);
+        }
+      }
+
+      function showFallback(kind, d) {
+        viewerFallback.classList.remove("is-hidden");
+        if (d.poster) {
+          fallbackImg.src = d.poster;
+          fallbackImg.alt = d.alt || d.overlayName;
+          fallbackImg.hidden = false;
+        } else {
+          fallbackImg.removeAttribute("src");
+          fallbackImg.hidden = true;
+        }
+        if (kind === "no-src") {
+          fallbackTitle.textContent = "此條目暫無 3D 網格";
+          fallbackPath.innerHTML =
+            "請在 <code>models/</code> 目錄放入對應 <code>.glb</code>，並在數據中填寫 <code>modelSrc</code>。觀眾端將沿用海報圖作為展櫃佔位。";
+        } else {
+          fallbackTitle.textContent = "模型載入失敗";
+          fallbackPath.innerHTML =
+            "請檢查文件路徑 <code>" +
+            (d.modelSrc || "") +
+            "</code> 是否與頁面同域可訪問，或暫以海報圖佔位。本地預覽請用本地靜態服務打開目錄以避免 file:// 攔截。";
+        }
+      }
+
+      function render(key) {
+        const d = DATA[key];
+        if (!d) return;
+        activeKey = key;
+        overlayName.textContent = d.overlayName;
+        overlayEra.textContent = d.overlayEra;
+        topEraTitle.textContent = d.topEraTitle;
+        topEraSub.textContent = d.topEraSub;
+        swordModel.alt = d.alt || d.overlayName;
+        swordModel.setAttribute("poster", d.poster || "");
+
+        kvBlock.innerHTML = d.kv.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+        descBody.textContent = d.desc;
+        valueBody.textContent = d.value;
+        tagBlock.innerHTML = d.tags.map((t) => `<span class="tag">${t}</span>`).join("");
+        list.querySelectorAll(".sword-item").forEach((el) => {
+          el.classList.toggle("is-active", el.dataset.key === key);
+        });
+
+        if (!d.modelSrc) {
+          swordModel.classList.add("is-hidden");
+          swordModel.removeAttribute("src");
+          viewerLoading.classList.add("is-hidden");
+          showFallback("no-src", d);
+          syncAutoRotate();
+          return;
+        }
+
+        swordModel.classList.remove("is-hidden");
+        viewerFallback.classList.add("is-hidden");
+        viewerLoading.classList.remove("is-hidden");
+        swordModel.src = d.modelSrc;
+        syncAutoRotate();
+      }
+
+      function currentKey() {
+        const active = list.querySelector(".sword-item.is-active");
+        return active ? active.dataset.key : "goujian";
+      }
+
+      function step(delta) {
+        const i = KEYS.indexOf(currentKey());
+        const n = (i + delta + KEYS.length) % KEYS.length;
+        render(KEYS[n]);
+      }
+
+      swordModel.addEventListener("load", () => {
+        viewerLoading.classList.add("is-hidden");
+        viewerFallback.classList.add("is-hidden");
+        swordModel.classList.remove("is-hidden");
+        resetCamera();
+      });
+
+      swordModel.addEventListener("error", () => {
+        viewerLoading.classList.add("is-hidden");
+        swordModel.classList.add("is-hidden");
+        const d = DATA[activeKey];
+        if (d) showFallback("error", d);
+      });
+
+      list.addEventListener("click", (e) => {
+        const item = e.target.closest(".sword-item");
+        if (!item) return;
+        render(item.dataset.key);
+      });
+
+      btnPrev.addEventListener("click", () => step(-1));
+      btnNext.addEventListener("click", () => step(1));
+
+      btnAutoRotate.addEventListener("click", () => {
+        btnAutoRotate.classList.toggle("is-on");
+        syncAutoRotate();
+      });
+
+      btnResetCam.addEventListener("click", () => resetCamera());
+
+      document.querySelectorAll(".stage-dock .dock-btn[data-preset]").forEach((btn) => {
+        btn.addEventListener("click", () => applyLightPreset(btn.dataset.preset));
+      });
+
+      document.querySelectorAll(".icon-btn:not(#btnAutoRotate)").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const on = btn.classList.toggle("is-on");
+          btn.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+      });
+
+      applyLightPreset("neutral");
+      render("goujian");
+    }
+
+    if (customElements.get("model-viewer")) init();
+    else customElements.whenDefined("model-viewer").then(init);
+  </script>
+</body>
+</html>
