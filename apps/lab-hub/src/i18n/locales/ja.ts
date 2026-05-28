@@ -20,6 +20,7 @@ export const ja: HubTranslations = {
     ships: "宇宙 · 載具",
     robots: "メカ · ロボット",
     planets: "惑星 · 環境",
+    heritage: "華夏 · 古代",
   },
   gallery: {
     title: "おすすめ体験",
@@ -48,6 +49,12 @@ export const ja: HubTranslations = {
       subtitle: "惑星と環境",
       blurb: "惑星地形・大気・軌道ビュー — 近日公開。",
     },
+  },
+  heritage: {
+    catalogSubtitle: "8 テーマ総目録",
+    theme: "古代文明テーマ",
+    tag3d: "3D",
+    tagUi: "UI",
   },
   pills: { available: "体験可", comingSoon: "準備中" },
   cta: { open: "体験する", waitlist: "近日公開" },

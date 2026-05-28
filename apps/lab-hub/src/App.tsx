@@ -1,34 +1,21 @@
 import { useId, useMemo, useState } from "react";
-import type { DemoId, HubTranslations } from "@/i18n/types";
+import type { HubTranslations } from "@/i18n/types";
 import { useI18n } from "@/i18n/I18nProvider";
 import { LangSwitch } from "@/components/LangSwitch";
+import {
+  buildCoreGalleryRows,
+  buildHeritageRows,
+  type DemoCategory,
+  type GalleryRow,
+} from "@/data/gallery";
 
-const bioscope =
-  import.meta.env.VITE_URL_BIOSCOPE3D ?? "http://127.0.0.1:5173";
-const stellar =
-  import.meta.env.VITE_URL_STELLAR_EXPANSE ?? "http://127.0.0.1:5174";
-
-type DemoCategory = "cells" | "ships" | "robots" | "planets";
 type FilterKey = "all" | DemoCategory;
-
-type DemoCore = {
-  id: DemoId;
-  href?: string;
-  category: DemoCategory;
-  soon?: boolean;
-};
-
-const DEMO_CORE: DemoCore[] = [
-  { id: "bioscope3d", href: bioscope, category: "cells" },
-  { id: "stellar", href: stellar, category: "ships" },
-  { id: "robots", category: "robots", soon: true },
-  { id: "planets", category: "planets", soon: true },
-];
 
 const FILTER_ORDER: FilterKey[] = [
   "all",
   "cells",
   "ships",
+  "heritage",
   "robots",
   "planets",
 ];
@@ -45,6 +32,8 @@ function filterLabel(f: HubTranslations["filters"], key: FilterKey): string {
       return f.robots;
     case "planets":
       return f.planets;
+    case "heritage":
+      return f.heritage;
   }
 }
 
@@ -173,6 +162,46 @@ function PreviewRobots() {
   );
 }
 
+function PreviewHeritageGlyph({ glyph }: { glyph: string }) {
+  const id = useId().replace(/:/g, "");
+  return (
+    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <defs>
+        <linearGradient id={`${id}-bronze`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#3d3528" />
+          <stop offset="50%" stopColor="#6a5a3a" />
+          <stop offset="100%" stopColor="#2a2418" />
+        </linearGradient>
+        <radialGradient id={`${id}-glow`} cx="50%" cy="42%" r="50%">
+          <stop offset="0%" stopColor="#c9a962" stopOpacity="0.12" />
+          <stop offset="100%" stopColor="#c9a962" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="400" height="300" fill="#12100e" />
+      <rect width="400" height="300" fill={`url(#${id}-glow)`} />
+      <text
+        x="200"
+        y="168"
+        textAnchor="middle"
+        fill="#e4d4a8"
+        fillOpacity="0.88"
+        fontFamily="serif"
+        fontSize="88"
+      >
+        {glyph}
+      </text>
+      <rect
+        x="118"
+        y="208"
+        width="164"
+        height="1"
+        fill="#c9a962"
+        fillOpacity="0.25"
+      />
+    </svg>
+  );
+}
+
 function PreviewPlanets() {
   const id = useId().replace(/:/g, "");
   return (
@@ -210,8 +239,11 @@ function PreviewPlanets() {
   );
 }
 
-function ModelPreview({ category }: { category: DemoCategory }) {
-  switch (category) {
+function ModelPreview({ row }: { row: GalleryRow }) {
+  if (row.heritageIcon) {
+    return <PreviewHeritageGlyph glyph={row.heritageIcon} />;
+  }
+  switch (row.category) {
     case "cells":
       return <PreviewCells />;
     case "ships":
@@ -220,22 +252,75 @@ function ModelPreview({ category }: { category: DemoCategory }) {
       return <PreviewRobots />;
     case "planets":
       return <PreviewPlanets />;
+    case "heritage":
+      return <PreviewHeritageGlyph glyph="古" />;
   }
 }
 
-export function App() {
+function GalleryCard({ row }: { row: GalleryRow }) {
   const { t } = useI18n();
+  const preview = (
+    <div className="model-frame">
+      <ModelPreview row={row} />
+    </div>
+  );
+  const body = (
+    <div className="card-body">
+      <div className="card-tags">
+        <span className={`pill ${row.soon ? "pill-soon" : "pill-live"}`}>
+          {row.soon ? t.pills.comingSoon : t.pills.available}
+        </span>
+        <span className="pill">{row.subtitle}</span>
+      </div>
+      <h2>{row.title}</h2>
+      <p>{row.blurb}</p>
+      <div className="card-footer">
+        {row.soon ? (
+          <span className="cta">{t.cta.waitlist}</span>
+        ) : (
+          <span className="cta">
+            {t.cta.open}
+            <span className="cta-arrow" aria-hidden>
+              →
+            </span>
+          </span>
+        )}
+      </div>
+    </div>
+  );
+
+  if (row.soon || !row.href) {
+    return (
+      <div className="card card-soon">
+        {preview}
+        {body}
+      </div>
+    );
+  }
+
+  return (
+    <a className="card" href={row.href} rel="noopener noreferrer">
+      {preview}
+      {body}
+    </a>
+  );
+}
+
+export function App() {
+  const { locale, t } = useI18n();
   const [filter, setFilter] = useState<FilterKey>("all");
 
-  const allRows = useMemo(
-    () => DEMO_CORE.map((c) => ({ ...c, ...t.demos[c.id] })),
-    [t]
+  const coreRows = useMemo(() => buildCoreGalleryRows(t), [t]);
+  const heritageRows = useMemo(
+    () => buildHeritageRows(locale, t),
+    [locale, t]
   );
 
   const visible = useMemo(() => {
-    if (filter === "all") return allRows;
-    return allRows.filter((d) => d.category === filter);
-  }, [filter, allRows]);
+    if (filter === "heritage") return heritageRows;
+    if (filter === "all") return coreRows;
+    return coreRows.filter((d) => d.category === filter);
+  }, [filter, coreRows, heritageRows]);
 
   return (
     <div className="page">
@@ -292,46 +377,7 @@ export function App() {
           <ul className="grid">
             {visible.map((d) => (
               <li key={d.id} className="card-wrap">
-                {d.soon || !d.href ? (
-                  <div className="card card-soon">
-                    <div className="model-frame">
-                      <ModelPreview category={d.category} />
-                    </div>
-                    <div className="card-body">
-                      <div className="card-tags">
-                        <span className="pill pill-soon">{t.pills.comingSoon}</span>
-                        <span className="pill">{d.subtitle}</span>
-                      </div>
-                      <h2>{d.title}</h2>
-                      <p>{d.blurb}</p>
-                      <div className="card-footer">
-                        <span className="cta">{t.cta.waitlist}</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <a className="card" href={d.href} rel="noopener noreferrer">
-                    <div className="model-frame">
-                      <ModelPreview category={d.category} />
-                    </div>
-                    <div className="card-body">
-                      <div className="card-tags">
-                        <span className="pill pill-live">{t.pills.available}</span>
-                        <span className="pill">{d.subtitle}</span>
-                      </div>
-                      <h2>{d.title}</h2>
-                      <p>{d.blurb}</p>
-                      <div className="card-footer">
-                        <span className="cta">
-                          {t.cta.open}
-                          <span className="cta-arrow" aria-hidden>
-                            →
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </a>
-                )}
+                <GalleryCard row={d} />
               </li>
             ))}
           </ul>

@@ -30,9 +30,16 @@ export interface HubTranslations {
     ships: string;
     robots: string;
     planets: string;
+    heritage: string;
   };
   gallery: { title: string; countLine: (n: number) => string };
   demos: Record<DemoId, DemoCopy>;
+  heritage: {
+    catalogSubtitle: string;
+    theme: string;
+    tag3d: string;
+    tagUi: string;
+  };
   pills: { available: string; comingSoon: string };
   cta: { open: string; waitlist: string };
   graphics: { blueprintMark: string };

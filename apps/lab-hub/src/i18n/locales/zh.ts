@@ -20,6 +20,7 @@ export const zh: HubTranslations = {
     ships: "航天 · 载具",
     robots: "机械 · 机器人",
     planets: "星球 · 环境",
+    heritage: "华夏 · 古文明",
   },
   gallery: {
     title: "精选体验",
@@ -46,6 +47,12 @@ export const zh: HubTranslations = {
       subtitle: "星球与环境",
       blurb: "行星地貌、大气与轨道漫游场景，敬请期待。",
     },
+  },
+  heritage: {
+    catalogSubtitle: "8 大主题总目录",
+    theme: "古文明主题",
+    tag3d: "3D",
+    tagUi: "UI",
   },
   pills: { available: "可体验", comingSoon: "筹备中" },
   cta: { open: "立即体验", waitlist: "敬请期待" },

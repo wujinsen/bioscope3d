@@ -19,6 +19,12 @@ interface OriginalPbr {
 
 const SNAPSHOT_KEY = "__pbrOriginal";
 
+/** Per-material envMap cap after re-bake / stabilize (C1 — aligns with matte bisect). */
+export const PBR_ENV_MAP_INTENSITY_CEILING = 0.28;
+
+/** drei `<Environment environmentIntensity>` — global IBL strength (C1). */
+export const PBR_HDRI_ENVIRONMENT_INTENSITY = 0.16;
+
 function snapshot(mat: THREE.MeshStandardMaterial): OriginalPbr {
   const existing = mat.userData[SNAPSHOT_KEY] as OriginalPbr | undefined;
   if (existing) return existing;
@@ -48,11 +54,10 @@ function eachMaterial(root: THREE.Object3D, fn: (m: THREE.MeshStandardMaterial) 
 /**
  * Apply (or restore) the PBR enhancement pass.
  *
- * Enhanced mode tweaks (Tripo-aware):
- *  - roughness: never pull already-matte exports toward mid-shine — that is what
- *    reads as HDRI speckle on dense tangents; only nudge already-shiny slots slightly.
- *  - envMapIntensity: small bump with a low ceiling — no floor that overrides
- *    `stabilizeTripoOrganicMaterial`'s env cap.
+ * Enhanced mode tweaks (Tripo-aware, B4 + C1):
+ *  - roughness: do not pull values down (legacy 0.96× / 0.42 floor caused HDRI speckle);
+ *    matte slots only nudge toward 1, never toward mid-shine.
+ *  - envMapIntensity: no re-bake bump — clamp to a low ceiling only.
  *  - Physical clearcoat capped after enhancements (Tripo sparkle control).
  *
  * Original mode restores from the snapshot.
@@ -65,11 +70,16 @@ export function enhancePBR(scene: THREE.Object3D, enhanced: boolean): void {
       if (orig.roughness !== undefined) {
         const r = orig.roughness;
         m.roughness =
-          r >= 0.85 ? THREE.MathUtils.clamp(r * 0.995, 0.9, 1) :
-          Math.max(0.42, Math.min(r * 0.96, r));
+          r >= 0.82
+            ? THREE.MathUtils.clamp(Math.max(r, 0.94), 0.9, 1)
+            : THREE.MathUtils.clamp(r, r, 0.96);
       }
       const baseEnv = orig.envMapIntensity ?? 1;
-      m.envMapIntensity = THREE.MathUtils.clamp(baseEnv * 1.04, 0.12, 0.36);
+      m.envMapIntensity = THREE.MathUtils.clamp(
+        baseEnv,
+        0.08,
+        PBR_ENV_MAP_INTENSITY_CEILING,
+      );
       if (orig.normalScale && m.normalScale) m.normalScale.copy(orig.normalScale);
     } else {
       if (orig.roughness !== undefined) m.roughness = orig.roughness;

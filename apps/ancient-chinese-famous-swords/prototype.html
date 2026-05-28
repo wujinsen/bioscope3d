@@ -89,6 +89,22 @@
       transition: color 0.15s;
     }
     .nav-crumb a:hover { color: var(--gold); }
+    .nav-crumb button.crumb-filter {
+      font: inherit;
+      font-size: inherit;
+      color: var(--gold-dim);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .nav-crumb button.crumb-filter:hover { color: var(--gold); }
+    .nav-crumb button.crumb-filter.is-active {
+      color: var(--gold-bright);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     .nav-crumb span.sep { opacity: 0.4; user-select: none; }
 
     .topbar-center {
@@ -231,6 +247,7 @@
       transition: background 0.15s, border-color 0.15s;
     }
     .sword-item:hover { background: rgba(201, 169, 98, 0.05); }
+    .sword-item.is-hidden { display: none; }
     .sword-item.is-active {
       background: rgba(201, 169, 98, 0.08);
       border-color: var(--line-strong);
@@ -599,11 +616,12 @@
     <header class="topbar">
       <div class="brand-block">
         <div class="brand-title">古劍錄 · 中國名劍數位展廳</div>
-        <nav class="nav-crumb" aria-label="篩選">
-          <a href="#">全部名劍</a><span class="sep">/</span>
-          <a href="#">青銅劍</a><span class="sep">/</span>
-          <a href="#">鐵劍與鋼劍</a><span class="sep">/</span>
-          <a href="#">典籍傳說</a>
+        <nav class="nav-crumb" aria-label="篩選" id="swordFilters">
+          <a href="./index.html">展廳目錄</a><span class="sep">/</span>
+          <button type="button" class="crumb-filter is-active" data-cat="all">全部名劍</button><span class="sep">/</span>
+          <button type="button" class="crumb-filter" data-cat="bronze">青銅劍</button><span class="sep">/</span>
+          <button type="button" class="crumb-filter" data-cat="iron">鐵劍與鋼劍</button><span class="sep">/</span>
+          <button type="button" class="crumb-filter" data-cat="legend">典籍傳說</button>
         </nav>
       </div>
       <div class="topbar-center">
@@ -635,7 +653,7 @@
           <div class="count">共 <span id="swordCount">3</span> 柄</div>
         </div>
         <ul class="sword-list" id="swordList">
-          <li class="sword-item is-active" data-key="goujian" data-idx="0">
+          <li class="sword-item is-active" data-key="goujian" data-category="bronze" data-idx="0">
             <img class="sword-thumb" src="./Gemini_Generated_Image_y4kyzuy4kyzuy4ky.png" alt="" width="52" height="52" />
             <div class="sword-meta">
               <div class="sword-name">越王勾踐劍</div>
@@ -645,7 +663,7 @@
               </div>
             </div>
           </li>
-          <li class="sword-item" data-key="longquan" data-idx="1">
+          <li class="sword-item" data-key="longquan" data-category="iron" data-idx="1">
             <div class="sword-thumb ph">龍</div>
             <div class="sword-meta">
               <div class="sword-name">龍泉劍</div>
@@ -655,7 +673,7 @@
               </div>
             </div>
           </li>
-          <li class="sword-item" data-key="ganjiang" data-idx="2">
+          <li class="sword-item" data-key="ganjiang" data-category="legend" data-idx="2">
             <div class="sword-thumb ph">吳</div>
             <div class="sword-meta">
               <div class="sword-name">干將莫邪</div>
@@ -815,9 +833,12 @@
     };
 
     let activeKey = "goujian";
+    let activeCategory = "all";
 
     function init() {
       const list = document.getElementById("swordList");
+      const swordCount = document.getElementById("swordCount");
+      const swordFilters = document.getElementById("swordFilters");
       const swordModel = document.getElementById("swordModel");
       const viewerLoading = document.getElementById("viewerLoading");
       const viewerFallback = document.getElementById("viewerFallback");
@@ -923,16 +944,51 @@
         syncAutoRotate();
       }
 
+      function visibleItems() {
+        return [...list.querySelectorAll(".sword-item")].filter(
+          (el) => !el.classList.contains("is-hidden")
+        );
+      }
+
+      function syncSwordCount() {
+        swordCount.textContent = String(visibleItems().length);
+      }
+
+      function applyCategoryFilter(cat) {
+        activeCategory = cat;
+        swordFilters.querySelectorAll(".crumb-filter").forEach((btn) => {
+          btn.classList.toggle("is-active", btn.dataset.cat === cat);
+        });
+        list.querySelectorAll(".sword-item").forEach((el) => {
+          const show = cat === "all" || el.dataset.category === cat;
+          el.classList.toggle("is-hidden", !show);
+        });
+        syncSwordCount();
+        const active = list.querySelector(".sword-item.is-active");
+        if (active && active.classList.contains("is-hidden")) {
+          const first = visibleItems()[0];
+          if (first) render(first.dataset.key);
+        }
+      }
+
       function currentKey() {
         const active = list.querySelector(".sword-item.is-active");
         return active ? active.dataset.key : "goujian";
       }
 
       function step(delta) {
-        const i = KEYS.indexOf(currentKey());
-        const n = (i + delta + KEYS.length) % KEYS.length;
-        render(KEYS[n]);
+        const items = visibleItems();
+        const keys = items.map((el) => el.dataset.key);
+        const i = keys.indexOf(currentKey());
+        const n = (i + delta + keys.length) % keys.length;
+        render(keys[n]);
       }
+
+      swordFilters.addEventListener("click", (e) => {
+        const btn = e.target.closest(".crumb-filter");
+        if (!btn) return;
+        applyCategoryFilter(btn.dataset.cat);
+      });
 
       swordModel.addEventListener("load", () => {
         viewerLoading.classList.add("is-hidden");

@@ -11,7 +11,9 @@
     "dev:hub": "npm run dev -w lab-hub",
     "dev:bioscope3d": "npm run dev -w bioscope3d",
     "dev:stellar-expanse": "npm run dev -w stellar-expanse",
+    "dev:heritage": "npm run dev -w ancient-chinese-famous-swords",
     "sync:models": "node scripts/sync-models.mjs",
+    "audit:gltf": "npm run audit:gltf -w bioscope3d",
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present"
   }

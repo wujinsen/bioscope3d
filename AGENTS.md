@@ -201,6 +201,9 @@ If unavoidable:
 
 Newest first. **When you make a decision that isn't here, add it.**
 
+### 2026-05-16 · Tripo PBR speckle mitigation (B4–B3 + C1 + A1)
+Short-term **B4+C1** in `pbr.ts` / `SceneEnvironment` / Tripo `<model-viewer>` exposure. Mid-term **B1–B2** and Research **B3** in `tripoDebug.ts` (`CellModel` when R3F is mounted). Read-only batch audit: `apps/bioscope3d/scripts/audit-tripo-gltf.mjs` (`pnpm -C apps/bioscope3d audit:gltf`). Tri-lingual roadmap: `docs/06-pbr-tripo-mitigation.md` (+ `.en.md`, `.ja.md`).
+
 ### 2026-05-14 · Canonical clone folder **`bioscope3d/`**
 The workspace was historically checked out as **`3D2`** (early working title). Docs and tree diagrams now use **`bioscope3d/`** as the repo root label to match the **BioScope3D** product. Rename an existing local folder when convenient (`mv 3D2 bioscope3d` or re-clone); refresh hard-coded absolute paths in personal scripts or Python venvs. Root workspace `package.json::name` is **`bioscope3d-workspace`** so it stays distinct from the **`bioscope3d`** app package under `apps/`.
 
@@ -401,6 +404,7 @@ These are **all** files that must move as a group of three. If you touch one, th
 | Docs · features | `docs/03-features.md` · `docs/03-features.en.md` · `docs/03-features.ja.md` |
 | Docs · MVP roadmap | `docs/04-mvp-roadmap.md` · `docs/04-mvp-roadmap.en.md` · `docs/04-mvp-roadmap.ja.md` |
 | Docs · open questions | `docs/05-open-questions.md` · `docs/05-open-questions.en.md` · `docs/05-open-questions.ja.md` |
+| Docs · PBR / Tripo mitigation | `docs/06-pbr-tripo-mitigation.md` · `docs/06-pbr-tripo-mitigation.en.md` · `docs/06-pbr-tripo-mitigation.ja.md` |
 
 When you add a **new** multilingual file, also add it to this inventory in the same commit.
 

@@ -41,6 +41,14 @@ const ENTRIES = [
     dest: "apps/bioscope3d/public/models/tripo-bacteria-cell.glb",
   },
   {
+    src: "models/白血球.glb",
+    dest: "apps/bioscope3d/public/models/white-blood-cell.glb",
+  },
+  {
+    src: "models/肌肉细胞.glb",
+    dest: "apps/bioscope3d/public/models/muscle-cell.glb",
+  },
+  {
     src: "models/hunyuan3d-stellar-expanse.glb",
     dest: "apps/stellar-expanse/public/models/hunyuan3d-stellar-expanse.glb",
   },

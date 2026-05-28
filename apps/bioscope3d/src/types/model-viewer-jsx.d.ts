@@ -9,6 +9,7 @@ export type ModelViewerElementProps = DetailedHTMLProps<
     "camera-target"?: string;
     "field-of-view"?: string;
     "tone-mapping"?: string;
+    exposure?: string | number;
     "shadow-intensity"?: string | number;
     "auto-rotate"?: boolean;
     "interaction-prompt"?: string;

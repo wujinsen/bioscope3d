@@ -12,6 +12,7 @@
 
 ### 新增
 
+- **Tripo / glTF PBR 闪点治理（B4–B3、C1、A1）** — 三语文档 `docs/06-pbr-tripo-mitigation.md`。运行时：`enhancePBR` 哑光友好曲线、IBL 上限、`tripoDebug` 中 B1/B2 与 Research 下 B3 Specular AA（`CellModel`）。镜台：Tripo `<model-viewer>` 曝光随模式与 Re-bake 药丸变化（`modelViewerPbr.ts`）。只读审计：`pnpm -C apps/bioscope3d audit:gltf`（`--all` 扫描 `public/models`）。
 - **pnpm monorepo** — 根目录 `package.json` + `pnpm-workspace.yaml`；新增 `apps/lab-hub`（入口页，链接走环境变量）与 `apps/stellar-expanse`（飞船产品脚手架）。默认开发端口：hub **5170**、BioScope3D **5173**、Stellar **5174**。BioScope3D 的 `build` / `typecheck` / `lint` 使用 `pnpm exec`，以便在 pnpm 链接布局下正确找到 `tsc`。
 
 ### 变更

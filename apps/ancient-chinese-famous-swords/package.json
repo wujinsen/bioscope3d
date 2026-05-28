@@ -1,0 +1,15 @@
+{
+  "name": "ancient-chinese-famous-swords",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Chinese heritage digital galleries — category hub and Famous Swords prototype",
+  "scripts": {
+    "dev": "node ./scripts/run-vite-cli.mjs",
+    "build": "vite build",
+    "preview": "node ./scripts/run-vite-cli.mjs preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.7"
+  }
+}

@@ -12,6 +12,7 @@ versioning follows [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **Tripo / glTF PBR speckle mitigation (B4–B3, C1, A1)** — tri-lingual roadmap in `docs/06-pbr-tripo-mitigation.md`. Runtime: matte-friendly `enhancePBR`, capped IBL (`PBR_HDRI_ENVIRONMENT_INTENSITY` / `PBR_ENV_MAP_INTENSITY_CEILING`), `stabilizeTripoOrganicMaterial` + B2 roughness bias + Research `applySpecularAAMitigation` in `tripoDebug.ts` / `CellModel`. Live stage: Tripo `<model-viewer>` exposure follows mode and Re-bake pill via `modelViewerPbr.ts`. Read-only audit: `pnpm -C apps/bioscope3d audit:gltf` (`--all` scans `public/models`).
 - **pnpm monorepo** — root `package.json` + `pnpm-workspace.yaml`; new `apps/lab-hub` (landing with env-driven links) and `apps/stellar-expanse` (ship product scaffold). Default dev ports: hub **5170**, BioScope3D **5173**, Stellar **5174**. BioScope3D `build` / `typecheck` / `lint` scripts use `pnpm exec` so `tsc` resolves under pnpm’s linker.
 
 ### Changed

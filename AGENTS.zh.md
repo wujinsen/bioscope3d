@@ -199,6 +199,9 @@ v3.2 HTML 的 CSS **1:1** 迁到了 `styles/globals.css`。**选择器和类名�
 
 由新到旧。**当你做了一个不在这里的决策，把它加进来。**
 
+### 2026-05-16 · Tripo PBR 闪点治理（B4–B3 + C1 + A1）
+短期 **B4+C1** 见 `pbr.ts` / `SceneEnvironment` / Tripo `<model-viewer>` 曝光。中期 **B1–B2** 与 Research **B3** 见 `tripoDebug.ts`（R3F `CellModel` 挂载时）。只读批量审计：`apps/bioscope3d/scripts/audit-tripo-gltf.mjs`（`pnpm -C apps/bioscope3d audit:gltf`）。三语文档：`docs/06-pbr-tripo-mitigation.md`（及 `.en.md`、`.ja.md`）。
+
 ### 2026-05-14 · 约定 clone 目录名 **`bioscope3d/`**
 历史上本地目录常叫 **`3D2`**（早期工作代号）。文档与目录树现在以 **`bioscope3d/`** 作为仓库根标签，与 **BioScope3D** 产品一致。有空时把本地目录改名（`mv 3D2 bioscope3d` 或重新 clone），并检查个人脚本、Python venv 等是否写死旧绝对路径。根工作区 `package.json::name` 为 **`bioscope3d-workspace`**，与 `apps/` 下的 **`bioscope3d`** 应用包名区分。
 
@@ -399,6 +402,7 @@ v3.2 静态 CSS 用 `body[data-mode]` 和 `body[data-cell]`。`App.tsx` 把 stor
 | Docs · 功能清单 | `docs/03-features.md` · `docs/03-features.en.md` · `docs/03-features.ja.md` |
 | Docs · MVP 路线图 | `docs/04-mvp-roadmap.md` · `docs/04-mvp-roadmap.en.md` · `docs/04-mvp-roadmap.ja.md` |
 | Docs · 开放问题 | `docs/05-open-questions.md` · `docs/05-open-questions.en.md` · `docs/05-open-questions.ja.md` |
+| Docs · PBR / Tripo 闪点治理 | `docs/06-pbr-tripo-mitigation.md` · `docs/06-pbr-tripo-mitigation.en.md` · `docs/06-pbr-tripo-mitigation.ja.md` |
 
 新加一份多语言文件时，**同一 commit 也要把它登记到这张表里**。
 

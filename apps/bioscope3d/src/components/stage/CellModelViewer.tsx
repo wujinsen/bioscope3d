@@ -4,6 +4,7 @@ import { useAppStore } from "@stores/useAppStore";
 import { CELLS } from "@data/cells";
 import type { CellId } from "@/types";
 import { modelViewerCameraForCell, usesTripoStyleModelViewer } from "@/lib/cameraPreset";
+import { modelViewerExposureForTripo } from "@/lib/modelViewerPbr";
 
 type MV = HTMLElement & {
   autoRotate?: boolean;
@@ -62,10 +63,16 @@ export function CellModelViewer({
   const [loadFailed, setLoadFailed] = useState(false);
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
   const storeActiveCell = useAppStore((s) => s.activeCell);
+  const mode = useAppStore((s) => s.mode);
+  const pbrEnhanced = useAppStore((s) => s.pbrEnhanced);
   const autoRotate = useAppStore((s) => s.autoRotate);
   const cameraResetTick = useAppStore((s) => s.cameraResetTick);
   const cell = CELLS[cellId];
-  const canAutoRotate = !usesTripoStyleModelViewer(cell.modelPath);
+  const tripoStyle = usesTripoStyleModelViewer(cell.modelPath);
+  const exposure = tripoStyle
+    ? modelViewerExposureForTripo(mode, pbrEnhanced)
+    : 1;
+  const canAutoRotate = !tripoStyle;
   const cam = modelViewerCameraForCell(cell);
   const isLiveCell = cellId === storeActiveCell;
 
@@ -147,6 +154,7 @@ export function CellModelViewer({
           "camera-target": cam.target,
           "field-of-view": cam.fieldOfView,
           "tone-mapping": "neutral",
+          exposure,
           "shadow-intensity": 0,
           "interaction-prompt": "none",
         }}

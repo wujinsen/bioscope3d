@@ -10,6 +10,7 @@
     "preview": "node ./scripts/run-vite-cli.mjs preview",
     "typecheck": "tsc -b",
     "verify:glb": "node scripts/verify-glb-normalize.mjs",
+    "audit:gltf": "node scripts/audit-tripo-gltf.mjs",
     "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },

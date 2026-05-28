@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>华夏古文明 · 数字展厅目录</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #0a0a0c;
+      --panel: #121215;
+      --line: rgba(201, 169, 98, 0.22);
+      --line-strong: rgba(201, 169, 98, 0.45);
+      --gold: #c9a962;
+      --gold-bright: #e4d4a8;
+      --gold-dim: #8a7548;
+      --text: #c8c4bc;
+      --text-muted: #7a756c;
+      --font-display: "Ma Shan Zheng", "Noto Serif SC", serif;
+      --font-body: "Noto Serif SC", serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--void);
+      background-image:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201, 169, 98, 0.06), transparent),
+        linear-gradient(180deg, #0e0e11 0%, var(--void) 40%);
+    }
+    .page { max-width: 1120px; margin: 0 auto; padding: 28px 20px 48px; }
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 24px;
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      color: var(--gold-bright);
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    .brand-sub { margin: 0; font-size: 0.85rem; color: var(--text-muted); max-width: 36em; line-height: 1.55; }
+    .lang-row { display: flex; gap: 6px; }
+    .lang-btn {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--gold-dim);
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .lang-btn.is-active {
+      border-color: var(--line-strong);
+      color: var(--gold-bright);
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+      margin-bottom: 22px;
+    }
+    .toolbar-label { font-size: 0.72rem; color: var(--text-muted); }
+    .filter-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .filter-btn[aria-pressed="true"] {
+      border-color: var(--line-strong);
+      color: var(--gold-bright);
+      background: rgba(201, 169, 98, 0.08);
+    }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--gold);
+      margin: 0;
+      letter-spacing: 0.04em;
+    }
+    .section-count { font-size: 0.72rem; color: var(--text-muted); }
+    .grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: linear-gradient(165deg, var(--panel) 0%, rgba(18, 18, 21, 0.6) 100%);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    a.card:hover {
+      border-color: var(--line-strong);
+      transform: translateY(-2px);
+    }
+    .card.is-soon { cursor: default; opacity: 0.88; }
+    .card-icon {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--gold-dim);
+      border-bottom: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .card-body { padding: 12px 14px 14px; flex: 1; display: flex; flex-direction: column; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .pill {
+      font-size: 0.62rem;
+      padding: 2px 7px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      color: var(--gold-dim);
+    }
+    .pill-live { border-color: rgba(106, 154, 110, 0.5); color: #9bc49e; }
+    .pill-3d { color: var(--text-muted); }
+    .card h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gold-bright);
+      margin: 0 0 6px;
+    }
+    .card p {
+      margin: 0;
+      font-size: 0.76rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      flex: 1;
+    }
+    .card-examples {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .card-examples li::before { content: "· "; color: var(--gold-dim); }
+    .card-footer {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-size: 0.72rem;
+      color: var(--gold);
+    }
+    .card.is-soon .card-footer { color: var(--text-muted); }
+    .load-err {
+      padding: 24px;
+      border: 1px dashed var(--line);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .load-err.is-hidden { display: none; }
+    .hub-link {
+      display: inline-block;
+      margin-top: 28px;
+      font-size: 0.78rem;
+      color: var(--gold-dim);
+      text-decoration: none;
+    }
+    .hub-link:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div>
+        <h1 class="brand-title" id="pageTitle">华夏古文明 · 数字展厅</h1>
+        <p class="brand-sub" id="pageSubtitle">加载分类…</p>
+      </div>
+      <div class="lang-row" role="group" aria-label="Language">
+        <button type="button" class="lang-btn is-active" data-lang="zh">中文</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="ja">日本語</button>
+      </div>
+    </header>
+
+    <div class="toolbar" role="toolbar" aria-label="Filter">
+      <span class="toolbar-label" id="filterLabel">筛选</span>
+      <div class="filter-group" id="filterGroup">
+        <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">全部</button>
+        <button type="button" class="filter-btn" data-filter="live" aria-pressed="false">已上线</button>
+        <button type="button" class="filter-btn" data-filter="3d" aria-pressed="false">适合 3D</button>
+        <button type="button" class="filter-btn" data-filter="ui" aria-pressed="false">适合 UI</button>
+      </div>
+    </div>
+
+    <section aria-labelledby="gallery-title">
+      <div class="section-head">
+        <h2 id="gallery-title" class="section-title">主题分类</h2>
+        <span class="section-count" id="galleryCount"></span>
+      </div>
+      <ul class="grid" id="categoryGrid"></ul>
+      <p class="load-err is-hidden" id="loadErr"></p>
+    </section>
+
+    <a class="hub-link" href="http://127.0.0.1:5170/" id="hubLink">← 返回 Lab Hub</a>
+  </div>
+
+  <script>
+    const UI = {
+      zh: {
+        filterLabel: "筛选",
+        filters: { all: "全部", live: "已上线", "3d": "适合 3D", ui: "适合 UI" },
+        sectionTitle: "主题分类",
+        countLine: (n) => `共 ${n} 类`,
+        live: "可进入",
+        soon: "筹备中",
+        tag3d: "3D",
+        tagUi: "UI",
+        examples: "代表元素",
+        loadErr: "无法加载 data/taxonomy.json，请用 pnpm dev:heritage 启动本地服务。",
+      },
+      en: {
+        filterLabel: "Filter",
+        filters: { all: "All", live: "Live", "3d": "3D-ready", ui: "UI-ready" },
+        sectionTitle: "Themes",
+        countLine: (n) => `${n} themes`,
+        live: "Enter",
+        soon: "Planned",
+        tag3d: "3D",
+        tagUi: "UI",
+        examples: "Examples",
+        loadErr: "Could not load data/taxonomy.json — run pnpm dev:heritage from the repo root.",
+      },
+      ja: {
+        filterLabel: "絞り込み",
+        filters: { all: "すべて", live: "公開中", "3d": "3D向き", ui: "UI向き" },
+        sectionTitle: "テーマ分類",
+        countLine: (n) => `${n} テーマ`,
+        live: "入る",
+        soon: "準備中",
+        tag3d: "3D",
+        tagUi: "UI",
+        examples: "例",
+        loadErr: "data/taxonomy.json を読み込めません。pnpm dev:heritage で起動してください。",
+      },
+    };
+
+    let lang = "zh";
+    let taxonomy = null;
+    let activeFilter = "all";
+
+    function t(key) {
+      return UI[lang][key];
+    }
+
+    function pick(obj) {
+      return obj[lang] || obj.zh || "";
+    }
+
+    function applyLangButtons() {
+      document.querySelectorAll(".lang-btn").forEach((b) => {
+        b.classList.toggle("is-active", b.dataset.lang === lang);
+      });
+    }
+
+    function applyFilterLabels() {
+      document.getElementById("filterLabel").textContent = t("filterLabel");
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        const id = btn.dataset.filter;
+        btn.textContent = t("filters")[id] || id;
+      });
+      document.getElementById("gallery-title").textContent = t("sectionTitle");
+    }
+
+    function matchesFilter(cat) {
+      if (activeFilter === "all") return true;
+      if (activeFilter === "live") return cat.status === "live";
+      if (activeFilter === "3d") return cat.use3d;
+      if (activeFilter === "ui") return cat.useUi;
+      return true;
+    }
+
+    function renderGrid() {
+      if (!taxonomy) return;
+      const grid = document.getElementById("categoryGrid");
+      const visible = taxonomy.categories.filter(matchesFilter);
+      document.getElementById("galleryCount").textContent = t("countLine")(visible.length);
+      grid.innerHTML = visible
+        .map((cat) => {
+          const live = cat.status === "live" && cat.href;
+          const tagHtml = [
+            live
+              ? `<span class="pill pill-live">${t("live")}</span>`
+              : `<span class="pill">${t("soon")}</span>`,
+            cat.use3d ? `<span class="pill pill-3d">${t("tag3d")}</span>` : "",
+            cat.useUi ? `<span class="pill pill-3d">${t("tagUi")}</span>` : "",
+          ].join("");
+          const examples = (cat.examples || [])
+            .slice(0, 4)
+            .map((ex) => `<li>${pick(ex)}</li>`)
+            .join("");
+          const footer = live ? `${t("live")} →` : t("soon");
+          if (live) {
+            return `<li><a class="card" href="${cat.href}">
+              <div class="card-icon">${cat.icon}</div>
+              <div class="card-body">
+                <div class="card-tags">${tagHtml}</div>
+                <h2>${pick(cat.title)}</h2>
+                <p>${pick(cat.blurb)}</p>
+                <ul class="card-examples" aria-label="${t("examples")}">${examples}</ul>
+                <div class="card-footer">${footer}</div>
+              </div>
+            </a></li>`;
+          }
+          return `<li><div class="card is-soon" aria-disabled="true">
+            <div class="card-icon">${cat.icon}</div>
+            <div class="card-body">
+              <div class="card-tags">${tagHtml}</div>
+              <h2>${pick(cat.title)}</h2>
+              <p>${pick(cat.blurb)}</p>
+              <ul class="card-examples">${examples}</ul>
+              <div class="card-footer">${footer}</div>
+            </div>
+          </div></li>`;
+        })
+        .join("");
+    }
+
+    function renderPageMeta() {
+      document.getElementById("pageTitle").textContent = pick(taxonomy.title);
+      document.getElementById("pageSubtitle").textContent = pick(taxonomy.subtitle);
+      document.title = pick(taxonomy.title) + " · 目录";
+    }
+
+    async function init() {
+      const hub = new URLSearchParams(location.search).get("hub");
+      if (hub) document.getElementById("hubLink").href = hub;
+
+      try {
+        const res = await fetch("./data/taxonomy.json");
+        if (!res.ok) throw new Error(String(res.status));
+        taxonomy = await res.json();
+      } catch {
+        document.getElementById("loadErr").textContent = UI.zh.loadErr;
+        document.getElementById("loadErr").classList.remove("is-hidden");
+        return;
+      }
+
+      renderPageMeta();
+      applyLangButtons();
+      applyFilterLabels();
+      renderGrid();
+
+      document.querySelectorAll(".lang-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          lang = btn.dataset.lang;
+          applyLangButtons();
+          applyFilterLabels();
+          renderPageMeta();
+          renderGrid();
+        });
+      });
+
+      document.getElementById("filterGroup").addEventListener("click", (e) => {
+        const btn = e.target.closest(".filter-btn");
+        if (!btn) return;
+        activeFilter = btn.dataset.filter;
+        document.querySelectorAll(".filter-btn").forEach((b) => {
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+        renderGrid();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

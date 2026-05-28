@@ -20,6 +20,7 @@ export const en: HubTranslations = {
     ships: "Space · vehicles",
     robots: "Mech · robots",
     planets: "Planets · worlds",
+    heritage: "Heritage · China",
   },
   gallery: {
     title: "Featured experiences",
@@ -48,6 +49,12 @@ export const en: HubTranslations = {
       subtitle: "Worlds & terrain",
       blurb: "Planetary surfaces, atmospheres, and orbital views — coming soon.",
     },
+  },
+  heritage: {
+    catalogSubtitle: "8-theme catalog",
+    theme: "Heritage theme",
+    tag3d: "3D",
+    tagUi: "UI",
   },
   pills: { available: "Open", comingSoon: "In progress" },
   cta: { open: "Enter", waitlist: "Coming soon" },

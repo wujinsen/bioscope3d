@@ -199,6 +199,9 @@ CSS Modules への切替時期：あるクラスが他の領域と衝突した�
 
 新しいものが上。**ここにない判断を下したら、追加してください**。
 
+### 2026-05-16 · Tripo PBR スペックル低減（B4–B3 + C1 + A1）
+短期 **B4+C1** は `pbr.ts` / `SceneEnvironment` / Tripo `<model-viewer>` 露出。中期 **B1–B2** と Research **B3** は `tripoDebug.ts`（R3F `CellModel` マウント時）。読取専用監査：`apps/bioscope3d/scripts/audit-tripo-gltf.mjs`（`pnpm -C apps/bioscope3d audit:gltf`）。三語ロードマップ：`docs/06-pbr-tripo-mitigation.md`（`.en.md`、`.ja.md` 含む）。
+
 ### 2026-05-14 · clone 先フォルダ名の推奨 **`bioscope3d/`**
 歴史的にローカルは **`3D2`**（初期の作業タイトル）でした。ドキュメントとツリー図は **BioScope3D** に揃えるため、ルート表記を **`bioscope3d/`** に統一します。都合がついたら `mv 3D2 bioscope3d` か再 clone し、スクリプトや Python venv に埋めた絶対パスを更新してください。ルート `package.json::name` は **`bioscope3d-workspace`**（`apps/` 配下の **`bioscope3d`** パッケージと区別）。
 
@@ -399,6 +402,7 @@ v3.2 の静的 CSS は `body[data-mode]` と `body[data-cell]` を使用して�
 | Docs · 機能一覧 | `docs/03-features.md` · `docs/03-features.en.md` · `docs/03-features.ja.md` |
 | Docs · MVP ロードマップ | `docs/04-mvp-roadmap.md` · `docs/04-mvp-roadmap.en.md` · `docs/04-mvp-roadmap.ja.md` |
 | Docs · オープンクエスチョン | `docs/05-open-questions.md` · `docs/05-open-questions.en.md` · `docs/05-open-questions.ja.md` |
+| Docs · PBR / Tripo 低減 | `docs/06-pbr-tripo-mitigation.md` · `docs/06-pbr-tripo-mitigation.en.md` · `docs/06-pbr-tripo-mitigation.ja.md` |
 
 **新しく多言語ファイルを追加するときは、同じコミットでこの一覧にも登録**してください。
 

@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { useAppStore } from "@stores/useAppStore";
 import { enhancePBR, setClippingPlane } from "@/lib/pbr";
 import {
+  applySpecularAAMitigation,
   applyTripoDebugMaterialPasses,
   probeTripoMaterials,
   tuneTripoTextures,
@@ -82,6 +83,7 @@ export function CellModel({ src }: { src: string }) {
   const { scene: source } = useGLTF(src);
   const gl = useThree((s) => s.gl);
   const pbrEnhanced = useAppStore((s) => s.pbrEnhanced);
+  const mode = useAppStore((s) => s.mode);
   const crossSectionOn = useAppStore((s) => s.crossSectionOn);
   const tripoDebug = useAppStore((s) => s.tripoDebug);
   const setTripoMaterialProbe = useAppStore((s) => s.setTripoMaterialProbe);
@@ -111,6 +113,10 @@ export function CellModel({ src }: { src: string }) {
     enhancePBR(model, pbrEnhanced);
     applyTripoDebugMaterialPasses(model, tripoDebug);
   }, [model, pbrEnhanced, tripoDebug]);
+
+  useLayoutEffect(() => {
+    applySpecularAAMitigation(model, mode === "research");
+  }, [model, mode]);
 
   useLayoutEffect(() => {
     setClippingPlane(model, crossSectionOn ? clipPlane : null);

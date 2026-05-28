@@ -12,6 +12,7 @@
 
 ### 追加
 
+- **Tripo / glTF PBR スペックル低減（B4–B3、C1、A1）** — 三語 `docs/06-pbr-tripo-mitigation.md`。実行時：マット寄り `enhancePBR`、IBL 上限、`tripoDebug` の B1/B2 と Research 時 B3（`CellModel`）。ステージ：Tripo `<model-viewer>` 露出はモードと Re-bake 連動（`modelViewerPbr.ts`）。読取専用監査：`pnpm -C apps/bioscope3d audit:gltf`（`--all` は `public/models`）。
 - **pnpm monorepo** — ルート `package.json` + `pnpm-workspace.yaml`；新規 `apps/lab-hub`（ランディング、リンクは環境変数）と `apps/stellar-expanse`（船プロダクトの足場）。既定の開発ポート: hub **5170**、BioScope3D **5173**、Stellar **5174**。BioScope3D の `build` / `typecheck` / `lint` は `pnpm exec` 経由で `tsc` を解決。
 
 ### 変更

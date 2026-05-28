@@ -15,6 +15,7 @@
 | [03-features.md](./03-features.md) | Full feature list F01–F53 + F54–F63, with evidence, priority, technical difficulty | ✅ |
 | [04-mvp-roadmap.md](./04-mvp-roadmap.md) | MVP v1 / v2 / v3 staged roadmap | ✅ |
 | [05-open-questions.md](./05-open-questions.md) | Open decisions **(all closed 2026-05-13)** | ✅ |
+| [06-pbr-tripo-mitigation.md](./06-pbr-tripo-mitigation.md) | Tripo / glTF PBR speckle mitigation roadmap (B1–B4 · C1 · A1/A2) | ✅ |
 
 ## Key assets
 

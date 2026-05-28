@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import type { TripoDebugFlags, TripoMaterialProbe } from "@/types";
+import { PBR_ENV_MAP_INTENSITY_CEILING } from "@/lib/pbr";
 
 const TEXTURE_KEYS_STD: (keyof THREE.MeshStandardMaterial)[] = [
   "map",
@@ -45,6 +46,7 @@ export function tuneTripoTextures(root: THREE.Object3D, maxAnisotropy: number): 
         }
       }
       stabilizeTripoOrganicMaterial(m);
+      mitigateNormalMappedSpecularAliasing(m);
       const envMap = m.envMap;
       if (envMap instanceof THREE.Texture) {
         envMap.anisotropy = aniso;
@@ -70,12 +72,71 @@ function stabilizeTripoOrganicMaterial(m: THREE.MeshStandardMaterial): void {
 
   m.metalness = 0;
   m.metalnessMap = null;
-  m.roughness = Math.max(m.roughness, 0.88);
+  m.roughness = Math.max(m.roughness, 0.92);
   m.roughnessMap = null;
-  m.envMapIntensity = Math.min(m.envMapIntensity, 0.35);
+  m.envMapIntensity = Math.min(m.envMapIntensity, PBR_ENV_MAP_INTENSITY_CEILING);
   m.normalMap = null;
   if (m.normalScale) m.normalScale.set(1, 1);
   m.needsUpdate = true;
+}
+
+const NORMAL_MAPPED_ROUGHNESS_FLOOR = 0.78;
+const NORMAL_MAPPED_ROUGHNESS_TARGET = 0.8;
+
+/** B2: grazing-angle slots — roughness bias only (mip fix lives above). */
+function mitigateNormalMappedSpecularAliasing(m: THREE.MeshStandardMaterial): void {
+  if (m.name.startsWith("tripo_material")) return;
+  if (!m.normalMap && !m.bumpMap) return;
+  if (m.roughness < NORMAL_MAPPED_ROUGHNESS_FLOOR) {
+    m.roughness = THREE.MathUtils.lerp(
+      m.roughness,
+      NORMAL_MAPPED_ROUGHNESS_TARGET,
+      0.45,
+    );
+  }
+  m.needsUpdate = true;
+}
+
+const SPECULAR_AA_NORMAL_SCALE = 0.88;
+const SPECULAR_AA_ROUGHNESS_FLOOR = 0.78;
+const SPECULAR_AA_SNAP_KEY = "__specularAA_snap";
+
+interface SpecularAASnap {
+  roughness: number;
+  normalScale: THREE.Vector2;
+}
+
+/** B3: Research-mode heuristic — attenuate normal detail + floor roughness (reversible). */
+export function applySpecularAAMitigation(root: THREE.Object3D, enabled: boolean): void {
+  root.traverse((obj) => {
+    const mesh = obj as THREE.Mesh;
+    if (!mesh.isMesh || !mesh.material) return;
+    const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    for (const raw of mats) {
+      if (!(raw instanceof THREE.MeshStandardMaterial)) continue;
+      const m = raw;
+      const ud = m.userData as Record<string, unknown>;
+
+      if (enabled) {
+        if (!m.normalMap && !m.bumpMap) continue;
+        if (!ud[SPECULAR_AA_SNAP_KEY]) {
+          ud[SPECULAR_AA_SNAP_KEY] = {
+            roughness: m.roughness,
+            normalScale: m.normalScale.clone(),
+          } satisfies SpecularAASnap;
+        }
+        const snap = ud[SPECULAR_AA_SNAP_KEY] as SpecularAASnap;
+        m.roughness = Math.max(snap.roughness, SPECULAR_AA_ROUGHNESS_FLOOR);
+        m.normalScale.copy(snap.normalScale).multiplyScalar(SPECULAR_AA_NORMAL_SCALE);
+      } else if (ud[SPECULAR_AA_SNAP_KEY]) {
+        const snap = ud[SPECULAR_AA_SNAP_KEY] as SpecularAASnap;
+        m.roughness = snap.roughness;
+        m.normalScale.copy(snap.normalScale);
+        delete ud[SPECULAR_AA_SNAP_KEY];
+      }
+      m.needsUpdate = true;
+    }
+  });
 }
 
 export function probeTripoMaterials(root: THREE.Object3D): TripoMaterialProbe {

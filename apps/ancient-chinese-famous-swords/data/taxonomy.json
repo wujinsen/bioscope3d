@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "title": {
+    "zh": "华夏古文明 · 数字展厅",
+    "en": "Chinese Heritage · Digital Galleries",
+    "ja": "華夏古代文明 · デジタル展示"
+  },
+  "subtitle": {
+    "zh": "按主题分类浏览；已上线的子展厅可点击进入。",
+    "en": "Browse by theme. Open a gallery when it is marked live.",
+    "ja": "テーマ別に閲覧。公開済みのサブギャラリーから入れます。"
+  },
+  "categories": [
+    {
+      "id": "bronze-ritual",
+      "icon": "鼎",
+      "title": { "zh": "青铜与礼器", "en": "Bronze & ritual", "ja": "青銅と礼器" },
+      "blurb": {
+        "zh": "鼎钟、玉礼、青铜器纹样；三星堆、殷墟等考古符号。",
+        "en": "Vessels, bells, jade ritual pieces, and bronze motifs — including Sanxingdui and Yinxu.",
+        "ja": "鼎・編鐘・玉礼器、青銅文様。三星堆・殷墟など。"
+      },
+      "status": "planned",
+      "href": null,
+      "use3d": true,
+      "useUi": true,
+      "examples": [
+        { "zh": "三星堆纵目面具", "en": "Sanxingdui mask" },
+        { "zh": "编钟", "en": "Bianzhong bells" },
+        { "zh": "玉琮", "en": "Jade cong" },
+        { "zh": "饕餮纹", "en": "Taotie motif" }
+      ]
+    },
+    {
+      "id": "arms",
+      "icon": "剑",
+      "title": { "zh": "兵器武备", "en": "Arms & armor", "ja": "兵器と武備" },
+      "blurb": {
+        "zh": "剑戈戟弩、甲胄战车；名剑数字展厅已上线。",
+        "en": "Swords, halberds, bows, armor — includes the Famous Swords gallery (live).",
+        "ja": "剣・戈・弩・甲冑。名剣デジタル展は公開中。"
+      },
+      "status": "live",
+      "href": "./prototype.html",
+      "use3d": true,
+      "useUi": true,
+      "examples": [
+        { "zh": "越王勾践剑", "en": "Sword of Goujian" },
+        { "zh": "龙泉剑", "en": "Longquan sword" },
+        { "zh": "干将莫邪", "en": "Ganjiang & Moye" },
+        { "zh": "戈戟盾", "en": "Dagger-axe & shield" }
+      ]
+    },
+    {
+      "id": "costume",
+      "icon": "衣",
+      "title": { "zh": "服饰纹样", "en": "Costume & pattern", "ja": "衣装と紋様" },
+      "blurb": {
+        "zh": "汉服轮廓、冠冕簪佩、织绣纹样；适合 UI 图标与角色剪影。",
+        "en": "Hanfu silhouettes, hairpins, crowns, and textile patterns for UI and figures.",
+        "ja": "漢服シルエット、冠飾、織绣文様。UI向き。"
+      },
+      "status": "planned",
+      "href": null,
+      "use3d": false,
+      "useUi": true,
+      "examples": [
+        { "zh": "深衣曲裾", "en": "Quju robe" },
+        { "zh": "步摇簪", "en": "Buyao hairpin" },
+        { "zh": "云锦", "en": "Yun brocade" },
+        { "zh": "花钿", "en": "Forehead ornament" }
+      ]
+    },
+    {
+      "id": "architecture",
+      "icon": "阁",
+      "title": { "zh": "建筑园林", "en": "Architecture & gardens", "ja": "建築と庭園" },
+      "blurb": {
+        "zh": "斗拱飞檐、漏窗廊架、太湖石；3D 切一角即可识别。",
+        "en": "Bracket sets, eaves, lattice windows, Taihu rocks — a corner mesh reads instantly.",
+        "ja": "斗拱・飛檐・漏窗・太湖石。一部の3Dで十分。"
+      },
+      "status": "planned",
+      "href": null,
+      "use3d": true,
+      "useUi": true,
+      "examples": [
+        { "zh": "斗拱", "en": "Dougong brackets" },
+        { "zh": "月洞门", "en": "Moon gate" },
+        { "zh": "太湖石", "en": "Scholar rock" },
+        { "zh": "长城烽燧", "en": "Beacon tower" }
+      ]
+    },
+    {
+      "id": "archaeology",
+      "icon": "墟",
+      "title": { "zh": "考古符号", "en": "Archaeology icons", "ja": "考古シンボル" },
+      "blurb": {
+        "zh": "遗址器物风格化重绘；兵马俑、马王堆、海昏侯等。",
+        "en": "Stylized site icons — Terracotta Army, Mawangdui, Haihunhou, and more.",
+        "ja": "遺跡モチーフの様式化。兵馬俑・馬王堆など。"
+      },
+      "status": "planned",
+      "href": null,
+      "use3d": true,
+      "useUi": false,
+      "examples": [
+        { "zh": "兵马俑", "en": "Terracotta warriors" },
+        { "zh": "良渚玉琮", "en": "Liangzhu cong" },
+        { "zh": "马王堆", "en": "Mawangdui" },
+        { "zh": "丝路驼队", "en": "Silk Road caravan" }
+      ]
+    },
+    {
+      "id": "script-ui",
+      "icon": "简",
+      "title": { "zh": "文献与界面纹样", "en": "Script & UI motifs", "ja": "文献とUI文様" },
+      "blurb": {
+        "zh": "竹简卷轴、印章篆书、窗棂云雷纹；偏平面 UI 组件。",
+        "en": "Bamboo slips, seals, seal script, lattice and cloud-thunder bands for UI.",
+        "ja": "竹簡・巻物・印章・篆書・窓棂。"
+      },
+      "status": "planned",
+      "href": null,
+      "use3d": false,
+      "useUi": true,
+      "examples": [
+        { "zh": "竹简列表", "en": "Bamboo slip list" },
+        { "zh": "朱文印章", "en": "Seal stamp" },
+        { "zh": "云雷纹边框", "en": "Cloud-thunder border" },
+        { "zh": "二十四节气盘", "en": "Solar terms dial" }
+      ]
+    },
+    {
+      "id": "daily-objects",
+      "icon": "器",
+      "title": { "zh": "器物与生活", "en": "Objects & daily life", "ja": "器物と生活" },
+      "blurb": {
+        "zh": "漆器铜镜博山炉、棋酒食器；适合道具级 3D 与图标。",
+        "en": "Lacquer, mirrors, incense burners, board games — prop-scale 3D and icons.",
+        "ja": "漆器・銅鏡・博山炉・棋具。"
+      },
+      "status": "planned",
+      "href": null,
+      "use3d": true,
+      "useUi": true,
+      "examples": [
+        { "zh": "博山炉", "en": "Boshan censer" },
+        { "zh": "长信宫灯", "en": "Changxin lamp" },
+        { "zh": "漆器盒", "en": "Lacquer box" },
+        { "zh": "围棋", "en": "Go board" }
+      ]
+    },
+    {
+      "id": "myth-literature",
+      "icon": "兽",
+      "title": { "zh": "神话与文学", "en": "Myth & literature", "ja": "神話と文学" },
+      "blurb": {
+        "zh": "山海经异兽、四灵、诗词意象；空状态与叙事层。",
+        "en": "Classic of Mountains and Seas beasts, four symbols, poetry motifs.",
+        "ja": "山海経の異獣・四霊・詩詞イメージ。"
+      },
+      "status": "planned",
+      "href": null,
+      "use3d": true,
+      "useUi": true,
+      "examples": [
+        { "zh": "山海经异兽", "en": "Shanhai beasts" },
+        { "zh": "龙凤四灵", "en": "Dragon, phoenix, four symbols" },
+        { "zh": "皮影", "en": "Shadow puppet" },
+        { "zh": "飞天飘带", "en": "Apsara ribbons" }
+      ]
+    }
+  ],
+  "swordFilters": [
+    {
+      "id": "all",
+      "label": { "zh": "全部名剑", "en": "All swords", "ja": "すべて" }
+    },
+    {
+      "id": "bronze",
+      "label": { "zh": "青铜剑", "en": "Bronze", "ja": "青銅剣" }
+    },
+    {
+      "id": "iron",
+      "label": { "zh": "铁剑与钢剑", "en": "Iron & steel", "ja": "鉄・鋼" }
+    },
+    {
+      "id": "legend",
+      "label": { "zh": "典籍传说", "en": "Legend & texts", "ja": "典籍・伝説" }
+    }
+  ]
+}

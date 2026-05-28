@@ -11,7 +11,9 @@ export function usesTripoStyleModelViewer(modelPath?: string): boolean {
   return (
     modelPath.includes("animal-cell.glb") ||
     modelPath.includes("cancer-cell.glb") ||
-    modelPath.includes("neuron-cell.glb")
+    modelPath.includes("neuron-cell.glb") ||
+    modelPath.includes("white-blood-cell.glb") ||
+    modelPath.includes("muscle-cell.glb")
   );
 }
 

@@ -15,6 +15,7 @@
 | [03-features.md](./03-features.md) | 全機能リスト F01–F53 + F54–F63、証拠・優先度・技術的難度 | ✅ |
 | [04-mvp-roadmap.md](./04-mvp-roadmap.md) | MVP v1 / v2 / v3 段階ロードマップ | ✅ |
 | [05-open-questions.md](./05-open-questions.md) | 未解決事項 **（2026-05-13 にすべて確定済み）** | ✅ |
+| [06-pbr-tripo-mitigation.md](./06-pbr-tripo-mitigation.md) | Tripo / glTF PBR スペックル低減ロードマップ（B1–B4 · C1 · A1/A2） | ✅ |
 
 ## 主要アセット
 

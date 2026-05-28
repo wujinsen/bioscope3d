@@ -2,6 +2,7 @@ import { Environment } from "@react-three/drei";
 import { Suspense } from "react";
 import { useAppStore } from "@stores/useAppStore";
 import type { HdriPreset } from "@/types";
+import { PBR_HDRI_ENVIRONMENT_INTENSITY } from "@/lib/pbr";
 
 /**
  * Three HDRI presets exposed to the UI map to drei's built-in HDR files.
@@ -27,7 +28,11 @@ export function SceneEnvironment() {
   const preset = useAppStore((s) => s.hdriPreset);
   return (
     <Suspense fallback={null}>
-      <Environment preset={PRESET_MAP[preset]} background={false} environmentIntensity={0.22} />
+      <Environment
+        preset={PRESET_MAP[preset]}
+        background={false}
+        environmentIntensity={PBR_HDRI_ENVIRONMENT_INTENSITY}
+      />
     </Suspense>
   );
 }

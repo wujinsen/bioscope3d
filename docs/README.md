@@ -15,6 +15,7 @@
 | [03-features.md](./03-features.md) | F01–F53 完整功能清单，含证据链、优先级、技术难度 | ✅ |
 | [04-mvp-roadmap.md](./04-mvp-roadmap.md) | MVP v1 / v2 / v3 分阶段路线 | ✅ |
 | [05-open-questions.md](./05-open-questions.md) | 待决策项 **（已全部敲定 2026-05-13）** | ✅ |
+| [06-pbr-tripo-mitigation.md](./06-pbr-tripo-mitigation.md) | Tripo / glTF PBR 闪点治理路线图（B1–B4 · C1 · A1/A2） | ✅ |
 
 ## 关键资产
 
