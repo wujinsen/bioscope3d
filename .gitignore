@@ -33,6 +33,7 @@ pnpm-debug.log*
 
 # Vite / app build output
 apps/*/dist/
+page-dist/
 apps/*/dist-ssr/
 apps/*/.vite/
 apps/*/node_modules/.tmp/
