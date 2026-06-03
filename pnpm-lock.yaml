@@ -8,8 +8,17 @@ importers:
 
   .: {}
 
+  apps/ancient-chinese-famous-swords:
+    devDependencies:
+      vite:
+        specifier: ^6.0.7
+        version: 6.4.2(@types/node@22.19.19)
+
   apps/bioscope3d:
     dependencies:
+      '@bioscope3d/workspace-ui-locale':
+        specifier: workspace:*
+        version: link:../../packages/workspace-ui-locale
       '@google/model-viewer':
         specifier: ^4.0.0
         version: 4.2.0(three@0.171.0)
@@ -83,6 +92,9 @@ importers:
 
   apps/lab-hub:
     dependencies:
+      '@bioscope3d/workspace-ui-locale':
+        specifier: workspace:*
+        version: link:../../packages/workspace-ui-locale
       react:
         specifier: ^19.0.0
         version: 19.2.6
@@ -108,6 +120,9 @@ importers:
 
   apps/stellar-expanse:
     dependencies:
+      '@bioscope3d/workspace-ui-locale':
+        specifier: workspace:*
+        version: link:../../packages/workspace-ui-locale
       '@react-three/drei':
         specifier: ^10.7.7
         version: 10.7.7(@react-three/fiber@9.6.1(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(three@0.171.0))(@types/react@19.2.14)(@types/three@0.171.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(three@0.171.0)
@@ -142,6 +157,8 @@ importers:
       vite:
         specifier: ^6.0.7
         version: 6.4.2(@types/node@22.19.19)
+
+  packages/workspace-ui-locale: {}
 
 packages:
 

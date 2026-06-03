@@ -6,7 +6,7 @@
   "description": "Chinese heritage digital galleries — category hub and Famous Swords prototype",
   "scripts": {
     "dev": "node ./scripts/run-vite-cli.mjs",
-    "build": "vite build",
+    "build": "node ./scripts/run-vite-cli.mjs build",
     "preview": "node ./scripts/run-vite-cli.mjs preview"
   },
   "devDependencies": {
