@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - uses: pnpm/action-setup@v4
         with:
@@ -53,7 +55,11 @@ jobs:
           test -f page-dist/index.html
           test -f page-dist/studio/index.html
           test -f page-dist/heritage/index.html
-          ls -la page-dist
+          ls -la page-dist/studio/models/
+          du -sh page-dist/studio/models/
+          COUNT=$(find page-dist/studio/models -name '*.glb' -size +100k | wc -l)
+          echo "GLB files over 100KB in artifact: $COUNT (expected 7)"
+          test "$COUNT" -eq 7
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
