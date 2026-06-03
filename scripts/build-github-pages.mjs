@@ -27,6 +27,8 @@ const sharedEnv = {
   VITE_URL_BIOSCOPE3D: `${origin}/${repoName}/studio/`,
   VITE_URL_STELLAR_EXPANSE: `${origin}/${repoName}/studio/`,
   VITE_URL_HERITAGE_BASE: `${origin}/${repoName}/heritage/`,
+  /** Bust browser/CDN cache after Git LFS fix on Pages (see deploy #8). */
+  VITE_MODEL_CACHE_BUST: process.env.VITE_MODEL_CACHE_BUST ?? "2",
 };
 
 function run(cmd, args, extraEnv = {}) {
@@ -53,6 +55,7 @@ run("pnpm", ["--filter", "lab-hub", "run", "build"], {
 });
 run("pnpm", ["--filter", "bioscope3d", "run", "build"], {
   VITE_BASE_PATH: sharedEnv.VITE_BASE_STUDIO,
+  VITE_MODEL_CACHE_BUST: sharedEnv.VITE_MODEL_CACHE_BUST,
 });
 run("pnpm", ["--filter", "ancient-chinese-famous-swords", "run", "build"], {
   VITE_BASE_PATH: sharedEnv.VITE_BASE_HERITAGE,

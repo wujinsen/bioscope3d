@@ -128,6 +128,11 @@ export const en: Translations = {
     labels: "Labels",
     crossSection: "Cross-Section",
   },
+  stageViewer: {
+    loading: "Loading 3D model… (large file, may take a minute)",
+    loadFailed:
+      "3D model failed to load. Hard-refresh (Ctrl+Shift+R) or open in Chrome — not WeChat in-app browser.",
+  },
   exportDrawer: {
     title: "Export",
     subtitle: "Take your specimen elsewhere",

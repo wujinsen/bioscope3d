@@ -128,6 +128,11 @@ export const ja: Translations = {
     labels: "ラベル",
     crossSection: "断面",
   },
+  stageViewer: {
+    loading: "3Dモデルを読み込み中…（大容量のため時間がかかることがあります）",
+    loadFailed:
+      "3Dモデルの読み込みに失敗しました。強制再読み込み（Ctrl+Shift+R）するか、Chrome で開いてください。WeChat 内蔵ブラウザは非対応です。",
+  },
   exportDrawer: {
     title: "エクスポート",
     subtitle: "標本を別の場所に持ち出す",

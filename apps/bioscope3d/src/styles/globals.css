@@ -556,8 +556,8 @@ body[data-mode="teach"]   .pill { display: none; }
   position: absolute;
   inset: 0;
   pointer-events: auto;
-  will-change: transform;
 }
+.stage .cell-scene--model-viewer .model-viewer-loading-hero,
 .stage .cell-scene--model-viewer .model-viewer-fallback-hero {
   position: absolute;
   inset: 0;
@@ -590,6 +590,35 @@ body[data-mode="teach"]   .pill { display: none; }
 }
 .stage .cell-scene--model-viewer model-viewer.model-viewer--revealed {
   opacity: 1;
+}
+.stage .model-viewer-load-hint,
+.stage .model-viewer-load-error {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 4;
+  max-width: min(92%, 420px);
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  font: 500 12px var(--font-sans);
+  line-height: 1.45;
+  text-align: center;
+  pointer-events: none;
+}
+.stage .model-viewer-load-hint {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--olive-dk);
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-sm);
+}
+.stage .model-viewer-load-error {
+  background: rgba(255, 248, 240, 0.95);
+  color: var(--text);
+  border: 1px solid var(--lilac);
+  font-family: var(--font-hand);
+  font-size: 14px;
 }
 .stage .cell-scene canvas {
   display: block;

@@ -128,6 +128,11 @@ export const zh: Translations = {
     labels: "标签",
     crossSection: "剖面",
   },
+  stageViewer: {
+    loading: "正在加载 3D 模型…（文件较大，请稍候）",
+    loadFailed:
+      "3D 模型加载失败。请强制刷新（Ctrl+Shift+R），并用 Chrome / Edge 打开，勿用微信内置浏览器。",
+  },
   exportDrawer: {
     title: "导出",
     subtitle: "把标本带去别处",

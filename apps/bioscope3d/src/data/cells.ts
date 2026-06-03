@@ -1,5 +1,5 @@
 import type { CellMeta, CellId } from "@/types";
-import { publicUrl } from "@/lib/publicUrl";
+import { publicModelUrl, publicUrl } from "@/lib/publicUrl";
 
 /* ───────── Camera presets (F05) and dwell durations (F03) ─────────────
    Dwell durations come directly from the reference Tripo video
@@ -20,7 +20,7 @@ export const CELLS: Record<CellId, CellMeta> = {
     thumbnail: publicUrl("assets/cells/plant_cell.png"),
     heroScene: publicUrl("assets/scenes/hero_plant.png"),
     stageFallback: "paper",
-    modelPath: publicUrl("models/tripo-plant-cell-test.glb"),
+    modelPath: publicModelUrl("models/tripo-plant-cell-test.glb"),
     estimatedSize: "10–100 µm",
     dwellSeconds: 4.5,
     cameraPreset: { position: [2.75, 0.4, 0.12], target: [0, 0, 0], fov: 34 },
@@ -34,7 +34,7 @@ export const CELLS: Record<CellId, CellMeta> = {
     signatureColor: "var(--cell-animal)",
     thumbnail: publicUrl("assets/cells/animal_cell.png"),
     heroScene: publicUrl("assets/scenes/hero_plant.png"),
-    modelPath: publicUrl("models/animal-cell.glb"),
+    modelPath: publicModelUrl("models/animal-cell.glb"),
     /** Hemisphere dish: look toward XY cross-section from +Z with a top-down bias (not edge-on membrane). */
     tripoThinAlong: "z",
     tripoViewerPhiDeg: 32,
@@ -51,7 +51,7 @@ export const CELLS: Record<CellId, CellMeta> = {
     signatureColor: "var(--cell-cancer)",
     thumbnail: publicUrl("assets/cells/animal_cell.png"),
     heroScene: publicUrl("assets/scenes/hero_plant.png"),
-    modelPath: publicUrl("models/cancer-cell.glb"),
+    modelPath: publicModelUrl("models/cancer-cell.glb"),
     tripoThinAlong: "z",
     tripoViewerPhiDeg: 32,
     estimatedSize: "~10–30 µm (varies)",
@@ -67,7 +67,7 @@ export const CELLS: Record<CellId, CellMeta> = {
     signatureColor: "var(--cell-bacteria)",
     thumbnail: publicUrl("assets/cells/bacteria_cell.png"),
     heroScene: publicUrl("assets/scenes/hero_plant.png"),
-    modelPath: publicUrl("models/tripo-bacteria-cell.glb"),
+    modelPath: publicModelUrl("models/tripo-bacteria-cell.glb"),
     tripoThinAlong: "z",
     /** Below default 108 → camera closer so bacteria fills the stage like plant/animal. */
     tripoViewerRadiusPct: 10,
@@ -97,7 +97,7 @@ export const CELLS: Record<CellId, CellMeta> = {
     signatureColor: "var(--cell-neuron)",
     thumbnail: publicUrl("assets/cells/neuron.png"),
     heroScene: publicUrl("assets/scenes/hero_plant.png"),
-    modelPath: publicUrl("models/neuron-cell.glb"),
+    modelPath: publicModelUrl("models/neuron-cell.glb"),
     tripoThinAlong: "z",
     tripoViewerPhiDeg: 32,
     estimatedSize: "4–100 µm",
@@ -113,7 +113,7 @@ export const CELLS: Record<CellId, CellMeta> = {
     signatureColor: "var(--cell-wbc)",
     thumbnail: publicUrl("assets/cells/white_blood.png"),
     heroScene: publicUrl("assets/scenes/hero_plant.png"),
-    modelPath: publicUrl("models/white-blood-cell.glb"),
+    modelPath: publicModelUrl("models/white-blood-cell.glb"),
     tripoThinAlong: "z",
     tripoViewerPhiDeg: 32,
     estimatedSize: "12–17 µm",
@@ -129,7 +129,7 @@ export const CELLS: Record<CellId, CellMeta> = {
     signatureColor: "var(--cell-muscle)",
     thumbnail: publicUrl("assets/cells/muscle.png"),
     heroScene: publicUrl("assets/scenes/hero_plant.png"),
-    modelPath: publicUrl("models/muscle-cell.glb"),
+    modelPath: publicModelUrl("models/muscle-cell.glb"),
     tripoThinAlong: "z",
     tripoViewerPhiDeg: 32,
     estimatedSize: "10–500 µm",

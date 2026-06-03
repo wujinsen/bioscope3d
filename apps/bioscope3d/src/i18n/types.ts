@@ -138,6 +138,10 @@ export interface Translations {
     labels: string;
     crossSection: string;
   };
+  stageViewer: {
+    loading: string;
+    loadFailed: string;
+  };
   exportDrawer: {
     title: string;
     subtitle: string;

@@ -3,6 +3,7 @@ import "@google/model-viewer";
 import { useAppStore } from "@stores/useAppStore";
 import { CELLS } from "@data/cells";
 import type { CellId } from "@/types";
+import { useT } from "@/i18n/I18nProvider";
 import { modelViewerCameraForCell, usesTripoStyleModelViewer } from "@/lib/cameraPreset";
 import { modelViewerExposureForTripo } from "@/lib/modelViewerPbr";
 
@@ -59,9 +60,11 @@ export function CellModelViewer({
   cellId: CellId;
   src: string;
 }) {
+  const t = useT();
   const ref = useRef<MV>(null);
   const [loadFailed, setLoadFailed] = useState(false);
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const storeActiveCell = useAppStore((s) => s.activeCell);
   const mode = useAppStore((s) => s.mode);
   const pbrEnhanced = useAppStore((s) => s.pbrEnhanced);
@@ -78,6 +81,7 @@ export function CellModelViewer({
 
   useLayoutEffect(() => {
     setLoadedSrc((prev) => (prev === src ? prev : null));
+    setLoading(true);
   }, [src]);
 
   useEffect(() => {
@@ -89,15 +93,23 @@ export function CellModelViewer({
     if (!el) return;
     const onLoad = () => {
       setLoadFailed(false);
+      setLoading(false);
       setLoadedSrc(src);
       scheduleCameraApplication(el, cam);
     };
     const onError = () => {
       setLoadFailed(true);
+      setLoading(false);
       setLoadedSrc(null);
+    };
+    const onProgress = (e: Event) => {
+      const total = (e as CustomEvent<{ totalProgress?: number }>).detail
+        ?.totalProgress;
+      if (typeof total === "number" && total >= 1) setLoading(false);
     };
     el.addEventListener("load", onLoad);
     el.addEventListener("error", onError);
+    el.addEventListener("progress", onProgress);
     const syncIfAlreadyLoaded = () => {
       if (el.loaded) onLoad();
     };
@@ -106,6 +118,7 @@ export function CellModelViewer({
     return () => {
       el.removeEventListener("load", onLoad);
       el.removeEventListener("error", onError);
+      el.removeEventListener("progress", onProgress);
     };
   }, [src, cam.orbit, cam.target, cam.fieldOfView]);
 
@@ -131,11 +144,25 @@ export function CellModelViewer({
   }, [autoRotate, canAutoRotate, isLiveCell]);
 
   const modelReady = !loadFailed && loadedSrc === src;
+  const showLoadingHero = !modelReady && !loadFailed;
 
   return (
     <div className="cell-scene cell-scene--model-viewer" aria-hidden="true">
+      {showLoadingHero ? (
+        <img className="model-viewer-loading-hero" src={cell.heroScene} alt="" />
+      ) : null}
       {loadFailed ? (
-        <img className="model-viewer-fallback-hero" src={cell.heroScene} alt="" />
+        <>
+          <img className="model-viewer-fallback-hero" src={cell.heroScene} alt="" />
+          <p className="model-viewer-load-error" role="status">
+            {t.stageViewer.loadFailed}
+          </p>
+        </>
+      ) : null}
+      {loading && !loadFailed && !modelReady ? (
+        <p className="model-viewer-load-hint" aria-live="polite">
+          {t.stageViewer.loading}
+        </p>
       ) : null}
       <model-viewer
         ref={ref}

@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_ENABLE_TIMELINE?: string;
   readonly VITE_ENABLE_QUIZ?: string;
   readonly VITE_ENABLE_CLIPPING?: string;
+  readonly VITE_MODEL_CACHE_BUST?: string;
 }
 
 interface ImportMeta {
