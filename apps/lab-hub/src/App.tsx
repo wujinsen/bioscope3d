@@ -327,7 +327,7 @@ export function App() {
       <div className="bg-texture" aria-hidden />
       <div className="content">
         <header className="topbar">
-          <a className="brand" href="/" aria-label={t.brand.homeAria}>
+          <a className="brand" href={import.meta.env.BASE_URL} aria-label={t.brand.homeAria}>
             <span className="brand-mark" aria-hidden>
               Lh
             </span>

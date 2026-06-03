@@ -4,8 +4,10 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
 
 const appDir = path.dirname(fileURLToPath(new URL(import.meta.url)));
+const base = process.env.VITE_BASE_PATH ?? "/";
 
 export default defineConfig({
+  base,
   root: appDir,
   plugins: [react()],
   resolve: {

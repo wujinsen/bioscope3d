@@ -2,6 +2,7 @@ import { Heart, Info } from "lucide-react";
 import { useAppStore } from "@stores/useAppStore";
 import { ORGANELLES_BY_CELL } from "@data/organelles";
 import { useT } from "@/i18n/I18nProvider";
+import { publicUrl } from "@/lib/publicUrl";
 
 export function SidebarRight() {
   return (
@@ -92,7 +93,7 @@ function WhereItOccurs() {
         <span className="name">{t.sidebarRight.whereItOccurs}</span>
       </div>
       <div className="scene">
-        <img src="/assets/scenes/where_tree.png" alt={t.sidebarRight.leafTreeAlt} />
+        <img src={publicUrl("assets/scenes/where_tree.png")} alt={t.sidebarRight.leafTreeAlt} />
         <div className="marker" title={t.sidebarRight.plantInLeafTitle}>
           <svg className="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
             <circle cx="12" cy="12" r="3" />

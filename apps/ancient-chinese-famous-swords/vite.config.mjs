@@ -2,9 +2,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const appDir = path.dirname(fileURLToPath(import.meta.url));
+const base = process.env.VITE_BASE_PATH ?? "/";
 
 /** Plain object config — no `import from "vite"` so dev can use a sibling app's vite binary. */
 export default {
+  base,
   root: appDir,
   server: {
     port: 5175,
