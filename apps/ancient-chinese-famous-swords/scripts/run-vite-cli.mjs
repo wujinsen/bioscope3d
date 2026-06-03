@@ -33,8 +33,9 @@ if (!viteJs) {
   process.exit(1);
 }
 
-const mode = process.argv[2] === "preview" ? "preview" : "dev";
-const viteArgs = mode === "preview" ? ["preview"] : [];
+const mode = process.argv[2];
+const viteArgs =
+  mode === "preview" ? ["preview"] : mode === "build" ? ["build"] : [];
 
 const child = spawn(process.execPath, [viteJs, ...viteArgs], {
   cwd: appRoot,
