@@ -41,6 +41,8 @@ function run(cmd, args, extraEnv = {}) {
 
 if (!process.env.CI) {
   run("pnpm", ["install"]);
+  run("pnpm", ["sync:models"]);
+  run("node", ["scripts/verify-pages-models.mjs"]);
 }
 
 run("pnpm", ["--filter", "lab-hub", "run", "build"], {

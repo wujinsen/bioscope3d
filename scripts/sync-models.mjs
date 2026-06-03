@@ -88,7 +88,7 @@ async function syncOne({ src, dest }) {
   await mkdir(dirname(absDest), { recursive: true });
   await removeDest(absDest);
 
-  if (process.platform === "win32") {
+  if (process.platform === "win32" || process.env.CI === "true") {
     await copyFile(absSrc, absDest);
     console.log(`copied ${dest} <- ${src}`);
     return;

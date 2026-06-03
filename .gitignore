@@ -1,9 +1,8 @@
 # Local pnpm store when created under the repo root (not portable)
 .pnpm-store/
 
-# Large GLB binaries — not in Git; download from maintainer storage (e.g. Google Drive) into models/, then pnpm sync:models
-/models/*.glb
-/apps/bioscope3d/public/models/*.glb
+# GLB binaries: commit under repo-root models/ (Git LFS recommended) for GitHub Pages — see docs/deploy-github-pages.md
+# After download: pnpm sync:models mirrors into apps/*/public/models/
 /apps/stellar-expanse/public/models/*.glb
 /apps/ancient-chinese-famous-swords/models/*.glb
 

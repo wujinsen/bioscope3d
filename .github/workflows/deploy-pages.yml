@@ -35,6 +35,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Sync GLB models into public/
+        run: pnpm sync:models
+
+      - name: Verify cell GLBs for Pages
+        run: node scripts/verify-pages-models.mjs
+
       - name: Build and assemble site
         env:
           CI: true
