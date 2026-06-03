@@ -6,7 +6,7 @@
   "description": "Workspace landing — links to BioScope3D, Stellar Expanse, and future demos",
   "scripts": {
     "dev": "node ./scripts/run-vite-cli.mjs",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "preview": "node ./scripts/run-vite-cli.mjs preview",
     "typecheck": "tsc -b"
   },

@@ -1,4 +1,5 @@
-import taxonomyJson from "../../../ancient-chinese-famous-swords/data/taxonomy.json";
+/** Keep in sync with apps/ancient-chinese-famous-swords/data/taxonomy.json */
+import taxonomyJson from "@/data/heritage-taxonomy.json";
 import type { Locale } from "@/i18n/types";
 
 export type HeritageTaxonomy = typeof taxonomyJson;

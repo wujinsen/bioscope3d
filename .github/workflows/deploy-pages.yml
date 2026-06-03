@@ -1,12 +1,5 @@
-# Deploy monorepo apps to GitHub Pages (project site: /{repo}/).
-# Enable once: Repo → Settings → Pages → Source: GitHub Actions.
-#
-# Live layout:
-#   https://<owner>.github.io/<repo>/           Lab Hub
-#   https://<owner>.github.io/<repo>/studio/    BioScope3D
-#   https://<owner>.github.io/<repo>/heritage/  Chinese heritage + swords
-#
-# GLB models are not in Git; deploy shows hero images until models are hosted separately.
+# Deploy monorepo to GitHub Pages (https://<owner>.github.io/<repo>/).
+# Repo → Settings → Pages → Source: GitHub Actions.
 
 name: Deploy GitHub Pages
 
@@ -22,58 +15,39 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      REPO_NAME: ${{ github.event.repository.name }}
-      PAGES_ORIGIN: https://${{ github.repository_owner }}.github.io
-      VITE_BASE_HUB: /${{ github.event.repository.name }}/
-      VITE_BASE_STUDIO: /${{ github.event.repository.name }}/studio/
-      VITE_BASE_HERITAGE: /${{ github.event.repository.name }}/heritage/
-      VITE_URL_BIOSCOPE3D: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/studio/
-      VITE_URL_STELLAR_EXPANSE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/studio/
-      VITE_URL_HERITAGE_BASE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/heritage/
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 9.15.4
 
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: pnpm
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build Lab Hub
+      - name: Build and assemble site
         env:
-          VITE_BASE_PATH: ${{ env.VITE_BASE_HUB }}
-          VITE_URL_BIOSCOPE3D: ${{ env.VITE_URL_BIOSCOPE3D }}
-          VITE_URL_STELLAR_EXPANSE: ${{ env.VITE_URL_STELLAR_EXPANSE }}
-          VITE_URL_HERITAGE_BASE: ${{ env.VITE_URL_HERITAGE_BASE }}
-        run: pnpm -C apps/lab-hub build
-
-      - name: Build BioScope3D
-        env:
-          VITE_BASE_PATH: ${{ env.VITE_BASE_STUDIO }}
-        run: pnpm -C apps/bioscope3d build
-
-      - name: Build heritage galleries
-        env:
-          VITE_BASE_PATH: ${{ env.VITE_BASE_HERITAGE }}
-        run: pnpm -C apps/ancient-chinese-famous-swords build
-
-      - name: Assemble site
-        env:
+          CI: true
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-        run: node scripts/assemble-github-pages.mjs
+        run: node scripts/build-github-pages.mjs
+
+      - name: Verify artifact
+        run: |
+          test -f page-dist/index.html
+          test -f page-dist/studio/index.html
+          test -f page-dist/heritage/index.html
+          ls -la page-dist
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
