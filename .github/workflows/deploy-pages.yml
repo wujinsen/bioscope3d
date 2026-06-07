@@ -48,6 +48,7 @@ jobs:
           CI: true
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          PAGES_CUSTOM_DOMAIN: bioscope3d.wu-jinsen.com
         run: node scripts/build-github-pages.mjs
 
       - name: Verify artifact

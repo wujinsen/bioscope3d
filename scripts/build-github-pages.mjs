@@ -15,18 +15,23 @@ const owner =
   process.env.GITHUB_REPOSITORY_OWNER ??
   repoFull.split("/")[0] ??
   "wujinsen";
-const origin = process.env.PAGES_ORIGIN ?? `https://${owner}.github.io`;
+const customDomain = process.env.PAGES_CUSTOM_DOMAIN?.trim();
+const origin = customDomain
+  ? `https://${customDomain}`
+  : (process.env.PAGES_ORIGIN ?? `https://${owner}.github.io`);
+const pathPrefix = customDomain ? "" : `/${repoName}`;
 
 const sharedEnv = {
   ...process.env,
   PAGES_REPO_NAME: repoName,
+  PAGES_CUSTOM_DOMAIN: customDomain ?? "",
   GITHUB_REPOSITORY_OWNER: owner,
-  VITE_BASE_HUB: `/${repoName}/`,
-  VITE_BASE_STUDIO: `/${repoName}/studio/`,
-  VITE_BASE_HERITAGE: `/${repoName}/heritage/`,
-  VITE_URL_BIOSCOPE3D: `${origin}/${repoName}/studio/`,
-  VITE_URL_STELLAR_EXPANSE: `${origin}/${repoName}/studio/`,
-  VITE_URL_HERITAGE_BASE: `${origin}/${repoName}/heritage/`,
+  VITE_BASE_HUB: `${pathPrefix}/`.replace(/\/{2,}/g, "/"),
+  VITE_BASE_STUDIO: `${pathPrefix}/studio/`.replace(/\/{2,}/g, "/"),
+  VITE_BASE_HERITAGE: `${pathPrefix}/heritage/`.replace(/\/{2,}/g, "/"),
+  VITE_URL_BIOSCOPE3D: `${origin}${pathPrefix}/studio/`.replace(/([^:]\/)\/+/g, "$1"),
+  VITE_URL_STELLAR_EXPANSE: `${origin}${pathPrefix}/studio/`.replace(/([^:]\/)\/+/g, "$1"),
+  VITE_URL_HERITAGE_BASE: `${origin}${pathPrefix}/heritage/`.replace(/([^:]\/)\/+/g, "$1"),
   /** Bust browser/CDN cache after Git LFS fix on Pages (see deploy #8). */
   VITE_MODEL_CACHE_BUST: process.env.VITE_MODEL_CACHE_BUST ?? "2",
 };

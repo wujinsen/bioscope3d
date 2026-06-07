@@ -31,11 +31,18 @@ async function copyTree(src, dest) {
   await cp(src, dest, { recursive: true });
 }
 
+function pagesHubUrl() {
+  const customDomain = process.env.PAGES_CUSTOM_DOMAIN?.trim();
+  if (customDomain) return `https://${customDomain}/`;
+  const owner = process.env.GITHUB_REPOSITORY_OWNER ?? "wujinsen";
+  return `https://${owner}.github.io/${REPO}/`;
+}
+
 async function patchHeritageHubLink() {
   const indexPath = join(OUT, "heritage", "index.html");
   try {
     let html = await readFile(indexPath, "utf8");
-    const hubUrl = `https://${process.env.GITHUB_REPOSITORY_OWNER ?? "wujinsen"}.github.io/${REPO}/`;
+    const hubUrl = pagesHubUrl();
     html = html.replace(
       /id="hubLink" href="[^"]*"/,
       `id="hubLink" href="${hubUrl}"`
@@ -83,10 +90,14 @@ async function main() {
   }
 
   await writeFile(join(OUT, ".nojekyll"), "");
+  const customDomain = process.env.PAGES_CUSTOM_DOMAIN?.trim();
+  if (customDomain) {
+    await writeFile(join(OUT, "CNAME"), `${customDomain}\n`);
+  }
   await patchHeritageHubLink();
 
   console.log(`GitHub Pages bundle ready: ${OUT}`);
-  console.log(`Live URL: https://${process.env.GITHUB_REPOSITORY_OWNER ?? "<user>"}.github.io/${REPO}/`);
+  console.log(`Live URL: ${pagesHubUrl()}`);
 }
 
 main().catch((err) => {
